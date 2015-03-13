@@ -1,0 +1,63 @@
+{% block doc -%}
+<!DOCTYPE html>
+<html{% block html_attribs %}{% endblock html_attribs %}>
+{%- block html %}
+  <head>
+    {%- block head %}
+    <title>{% block title %}{% endblock title %} | SteamScout</title>
+
+    {%- block styles %}
+    <!-- Bootstrap -->
+    <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='custom.css') }}">
+    {%- endblock styles %}
+    {%- endblock head %}
+  </head>
+  
+  <body{% block body_attribs %}{% endblock body_attribs %}>
+    {% block body -%}
+    {% block navbar %}
+    
+    <body class = "body">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">SteamScout</a>
+        </div>        
+        
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/games">Game Library</a></li>
+            <li><a href="/login">Log In</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container-fluid">
+        <div>
+          <ul class="nav navbar-nav">
+            <!--Still need to make the pages for these-->
+            <li><a href="/developers">Developers</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {%- endblock navbar %}
+    
+    {% block content -%}
+    <!--This is where each page will go-->
+    {%- endblock content %}
+
+    {% block scripts %}
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="/static/bootstrap.min.js"></script>
+    {%- endblock scripts %}
+    {%- endblock body %}
+  </body>
+{%- endblock html %}
+</html>
+{% endblock doc -%}

@@ -7,7 +7,6 @@ from flask_bootstrap import Bootstrap
 from flask.ext.login import LoginManager
 import requests
 
-
 app = Flask(__name__)
 app.config.from_object('config')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/steamscout.db'
@@ -50,6 +49,10 @@ class Games(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     game_id = db.Column(db.Integer, unique=True)
     game_name = db.Column(db.String, unique=True)
+    
+    def __init__(self, game_id, game_name):
+        self.game_id = game_id
+        self.game_name = game_name
 
 ################################# VIEWS ########################################
 

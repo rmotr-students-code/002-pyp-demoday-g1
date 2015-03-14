@@ -1,7 +1,12 @@
-from flask import Flask, request, render_template, redirect, session, json, g
+from flask import (
+    Flask, request, render_template, redirect, 
+    session, json, g, flash
+    )
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask.ext.openid import OpenID
+from flask.ext.login import LoginManager
+
 
 def create_app():
     app = Flask(__name__)
@@ -11,6 +16,13 @@ def create_app():
     db = SQLAlchemy(app)
     oid = OpenID(app)
     
+    
+    @app.before_request
+    def lookup_current_user():
+        g.user = None
+        if 'openid' in session:
+            openid = session['openid']
+            g.user = User.query.filter_by(openid=openid).first()  # I think we need to import user from models
     
     #routes
     @app.route('/')
@@ -48,3 +60,5 @@ def create_app():
 
 if __name__ == "__main__":
     create_app().run(host='0.0.0.0', port=8080, debug=True) # We have to remember to change debug = True back to False if we deply to heruku
+
+    # site url: https://002-pyp-demoday-g1-chanchar.c9.io

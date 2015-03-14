@@ -3,6 +3,7 @@ from flask import g, session
 
 #A model which will store the users steam ID for Sign in
 class User(db.Model):
+    __tablename__= 'user'
     id = db.Column(db.Integer, primary_key=True)
     steam_id = db.Column(db.String(40))
     nickname = db.String(80)
@@ -14,6 +15,17 @@ class User(db.Model):
     def __repr__(self):
         return '<nickname: {}>'.format(self.nickname)
 
+
+
+class Preferences(db.Model):
+    __tablename__= 'preferences'
+    user_id=db.Column(db.Integer,db.ForeignKey('User.id'), primary_key=True)
+    user = relatiochip(User, backref=backref(
+    game_id=db.Column(db.Integer)
+    thresh_amt=db.Column(db.float)
+    thresh_pct=db.Colum
+    
+    
 #Add user to db if he does not exist in db    
 """"@staticmethod
     def get_or_create(steam_id):

@@ -2,19 +2,23 @@
 {% block title %}Log In{% endblock %}
 {% block content %}
 
-<div id="login">
-    <h2>Sign in with OpenID:</h2>
-    <form action="" method="POST">
-       <!-- error handling here? -->
-       <br>
-       OpenID:
-       <input type="text" name="openID">
-       <input type="submit" value="Sign In">
-        
-    </form>
-    
-</div>
+<center><div class="form-group" id="login">
+   <h1>Sign In</h1>
+   <form action="" method="POST" name="login">
+       {{ form.hidden_tag() }} <!-- gets replaced with a hidden field that
+                                   implements CSRF prevention -->
+       <p>
+           Username:<br>
+           {{ form.username(size=80) }} <br>
+       </p>
+       <p>
+           Password:<br>
+           {{ form.password }}<br>
+       </p>
+       <p><input type="submit" value="Sign In"></p>
+   </form>
+</div></center>
 
 
 
-{%endblock%}
+{% endblock %}

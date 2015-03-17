@@ -159,7 +159,6 @@ def settings():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-<<<<<<< HEAD
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None:

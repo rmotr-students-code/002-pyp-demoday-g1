@@ -4,7 +4,7 @@
 {% block content %}
 
 {% for game in all_games %}
-    <p>{{% game['name'] %}}</p>
+    <p>{{ game['name'] }}</p>
 {% endfor %}
 
 {% endblock %}

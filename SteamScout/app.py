@@ -4,12 +4,14 @@ from flask import (
     )
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
-from flask.ext.login import LoginManager
-import requests
+import requests as r
 
 #### WTForms #####
 from flask_wtf import Form
-from wtforms import TextField, PasswordField, validators
+# from flask_wtf import Form, TextField, PasswordField, BooleanField
+# from flask_wtf.validators import Required, Length, Email, EqualTo
+from wtforms import TextField, PasswordField, BooleanField
+from wtforms.validators import Required, Length, Email, EqualTo
 
 #### Logins #####
 from flask.ext.login import (
@@ -21,10 +23,13 @@ from flask.ext.login import (
 ############################### INITIALIZATION #################################
 
 app = Flask(__name__)
-app.config.from_object('config')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/steamscout.db'
+app.config.from_object('config')        #specify your own database root
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////users/alan/desktop/steamscout.db'
 db = SQLAlchemy(app)
 Bootstrap(app)
+
+#Required for sessions
+app.secret_key = 'change_this_later'
 
 ################################## LOGINS ######################################
 
@@ -36,9 +41,8 @@ login_manager.login_view = 'login'
 
 #TO DO:
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))  
-
+def load_user(id):
+    return User.query.get(id)
 
 ################################### MODELS #####################################
 
@@ -60,11 +64,11 @@ class User(db.Model, UserMixin):
         self.password = password
         
     def __repr__(self):
-        return '<name: {}>'.format(self.name)
+        return '<name: {}>'.format(self.username)
     
     #Methods included by UserMixin:
     """
-    is_authenticated, is_active, is_anonymous, get_id()
+    is_authenticated, is_active, is_anonymous, get_id
     """
     
 
@@ -77,6 +81,7 @@ class Preferences(db.Model):
     threshold_percent=db.Column(db.Float)
     
     def __init__(self, user_id, game_id, threshold_amount, threshold_percent):
+    
         self.user_id = user_id
         self.game_id = game_id
         self.threshhold_amountt = threshold_amount
@@ -91,23 +96,37 @@ class Games(db.Model):
     def __init__(self, game_id, game_name):
         self.game_id = game_id
         self.game_name = game_name
+        
+db.create_all()  # Should we run this each time we run the app?
+
 
 ################################# FORMS ########################################
 
 class LoginForm(Form):
-    username = TextField('Username', [validators.Required()])
-    password = PasswordField('Password', [validators.Required()])
-   #remember_me = BooleanField('remember_me', default=False) 
+    username = TextField('Username', [Required()])
+    password = PasswordField('Password', [Required()])
+    remember_me = BooleanField('remember_me', default=False) 
 
 class SignUpForm(Form):
-    username = TextField('Username', [validators.Length(min=4, max=25)])
-    email = TextField('email', [validators.Length(min=6, max=35)])
-    password = PasswordField('New Password', [
-        validators.Required(),
-        validators.EqualTo('confirm', message='Passwords must match')
-        ])
-    confirm = PasswordField('Repeat password')
-    
+    username = TextField('Enter a Username', validators= [
+            Length(min=4, max=25, 
+            message=(u'You\'re username must be between 4 and 25 characters')),
+            Required("Please enter a username")])
+               
+    email = TextField('Enter Your Email', validators= [
+            Required("Please enter a valid email address"), 
+            Email(message=(u'That\'s not a valid email address'))])
+            
+    password = PasswordField('Enter a Password', validators= [
+            Required("Enter a secure password"), 
+            EqualTo('confirm', message=(u'Passwords must match'))])
+               
+    confirm = PasswordField('Please Repeat your Password', validators= [
+            Required("Please repeat your password")])
+        
+    # def validate(self):
+    #     # need to roll out our custom validations?
+    #     return True
 ################################# VIEWS ########################################
 
 @app.route('/')
@@ -117,7 +136,7 @@ def home():
 @app.route('/games')
 def games():
     # page that shows all the games.
-    games_request = requests.get('http://api.steampowered.com/ISteamApps/GetAppList/v0001')
+    games_request = r.get('http://api.steampowered.com/ISteamApps/GetAppList/v0001')
     all_games = [game for game in (games_request.json()["applist"]["apps"]["app"])]
     return render_template('games.html', all_games=all_games)
 
@@ -128,10 +147,10 @@ def show_developors():
 
 @app.route('/contact')
 def contact():
-    # page that shows all the games.
-    return render_template('contact.html')
+    users = User.query.all() # This works despite the error? C9Issue? - Martin
+    return render_template('contact.html', users=users)
 
-
+@login_required
 @app.route('/settings')
 def settings():
     pass
@@ -140,44 +159,55 @@ def settings():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    if form.validate_on_submit(): # c9 saying form doesnt have validate_on_submit method
-        login_user(user)            
-        flash("Logged in successfully!")
-        return redirect(url_for('/'))
-    return render_template('login.html', form=form)
+<<<<<<< HEAD
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None:
+            return render_template('login.html', form=form)
+        if user.password != form.password.data:
+            return render_template('login.html', form=form)
+        login_user(user)   
+        session['logged_in'] = True
+        session['username'] = user.username
+        return redirect(url_for('home'))
+    else:
+        return render_template('login.html', form=form)
 
-# @app.before_request
-# def before_request():
-#     g.user = None
-#     if 'user_id' in session:
-#         g.user = User.query.get(session['user_id'])
-
-# @app.route('/logout')
-# def logout():
-#     session.pop('user_id', None)
-#     return redirect(oid.get_next_url())
+@login_required
+@app.route('/logout')
+def logout():
+    logout_user()
+    session.pop('username')
+    session.pop('logged_in', None)
+    return redirect(url_for('home'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    form = SignUpForm()
-    if request.method == 'GET':
-        return render_template('signup.html', form=form)
-    
-    ### create new user object ### idk if this works:
+    form = SignUpForm(request.form)
     if request.method == 'POST' and form.validate():
-        user = User(form.username.data,
-                    form.email.data,
-                    form.password.data)
-        db.session.add(user)
-        db.session.commit() #not sure if this is necessary?
+        new_user = User(form.username.data,
+                         form.email.data,
+                         form.password.data)
+        db.session.add(new_user)
+        db.session.commit()
         flash('Registration successful!')
         return redirect(url_for('login'))
+    else:                                                   
+        return render_template('signup.html', form=form)
+
     
     
 
 
 if __name__ == "__main__":
-    # create_app().run(host='0.0.0.0', port=8080, debug=True) # We have to remember to change debug = True back to False if we deply to heruku    
-    app.run(host='0.0.0.0', port=8080, debug=False)
+    # create_app().run(host='0.0.0.0', port=8080, debug=True) 
+    # We have to remember to change debug = True back to False if we deply to heroku
+    app.run(host='0.0.0.0', port=8080, debug=True)
     # site url: https://002-pyp-demoday-g1-chanchar.c9.io
-    db.create_all()
+    
+    # server error: Port being used ... yada yada
+    
+    # terminal: "lsof -i :8080" looks for a process that using port 8080.
+    #           "kill {process number}", it's usually the first one listing using the second number in the listing. 
+    # Rerun the serve to see if it works. 
+    

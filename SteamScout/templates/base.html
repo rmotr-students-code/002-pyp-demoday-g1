@@ -8,9 +8,13 @@
 
     {%- block styles %}
     <!-- Bootstrap -->
-    <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap.min.css') }}">
-    <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='custom.css') }}">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap.min.css') }}">-->
+    <!--A custom css file in static that you can use to change default bootstrap features-->
+    <!--<link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='custom.css') }}">-->
     {%- endblock styles %}
+    {% block extra_styles %}
+    {% endblock extra_styles %}
     {%- endblock head %}
   </head>
   
@@ -27,8 +31,14 @@
         </div>        
         
           <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated() %}
+            <li> <a href="/settings">{{ current_user.username }}</a></li>
+            <li><a href="/games">Game Library</a></li>
+            <l1><a href="/logout">Log out</a></li>
+            {% else %}
             <li><a href="/games">Game Library</a></li>
             <li><a href="/login">Log In</a></li>
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -54,8 +64,10 @@
     {% block scripts %}
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript" src="/static/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     {%- endblock scripts %}
+    {% block extra_scripts %}
+    {% endblock extra_scripts %}
     {%- endblock body %}
   </body>
 {%- endblock html %}

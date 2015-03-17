@@ -2,23 +2,36 @@
 {% block title %}Log In{% endblock %}
 {% block content %}
 
-<center><div class="form-group" id="login">
-   <h1>Sign In</h1>
-   <form action="" method="POST" name="login">
-       {{ form.hidden_tag() }} <!-- gets replaced with a hidden field that
-                                   implements CSRF prevention -->
-       <p>
-           Username:<br>
-           {{ form.username(size=80) }} <br>
-       </p>
-       <p>
-           Password:<br>
-           {{ form.password }}<br>
-       </p>
-       <p><input type="submit" value="Sign In"></p>
-   </form>
-</div></center>
+<div class="container" id="login">
 
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
 
+  <center>
+   <h2>Sign In</h2>
+
+      <form action="{{ url_for('login') }}" method="POST" name="login">
+        {{ form.hidden_tag() }} <!-- gets replaced with a hidden field that
+                                   implements CSRF prevention -->   
+        <div class="form-group {% if form.username.errors %} has-error {% endif %}">
+           {{ form.username.label }}
+           {{ form.username(size=20) }} 
+           <p class="help-block">{{ form.username.errors[0] }}</p>
+        </div>
+
+        <div class="form-group {% if form.username.errors %} has-error {% endif %}">
+           {{ form.password.label }}
+           {{ form.password }}
+           <p class="help-block">{{ form.password.errors[0] }}</p>
+        </div>
+       
+
+        <button type="submit" class="btn form-control btn-success">Login</button>
+
+      </form>
+    </center>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

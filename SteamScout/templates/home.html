@@ -4,19 +4,34 @@
 {% block content %}
 <div class="jumbotron">
   <div class="container">
+    {% if current_user.is_authenticated() %}
+    <h1>Welcome {{ current_user.username }}!</h1>
+    {% else %}
     <h1>SteamScout</h1>
     <h2>Take control of your steam sale notifications</h2>
+    {% endif %}
     <!--<img src="http://www.twinfinite.net/wp-content/uploads/2014/08/2e26a347b12d299ad600fe73d3cbf6f0.jpg">-->
   </div>
 </div>
 
 <div class="btn-group btn-lg btn-group-justified" role="group">
+  {% if current_user.is_authenticated() %}
+  <div class="btn-group" role="group">
+    <a class="btn btn-default btn-lg" href="/games" role="button">Find a game!</a>
+  </div>
+  <div class="btn-group" role="group">
+    <a class="btn btn-default btn-lg" href="/settings" role="button">Preferences</a>
+  </div>
+  {% else %}
+
   <div class="btn-group" role="group">
     <a class="btn btn-default btn-lg" href="/login" role="button">Login</a>
   </div>
   <div class="btn-group" role="group">
     <a class="btn btn-default btn-lg" href="/signup" role="button">Sign Up</a>
   </div>
+  {% endif %}
+
 </div>
 {% endblock %}
 

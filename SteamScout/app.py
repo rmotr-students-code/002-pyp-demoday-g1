@@ -30,6 +30,7 @@ Bootstrap(app)
 
 #Required for sessions
 app.secret_key = 'change_this_later'
+
 ################################## LOGINS ######################################
 
 login_manager = LoginManager()
@@ -42,7 +43,6 @@ login_manager.login_view = 'login'
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(id)
-
 
 ################################### MODELS #####################################
 
@@ -99,6 +99,7 @@ class Games(db.Model):
         
 db.create_all()  # Should we run this each time we run the app?
 
+
 ################################# FORMS ########################################
 
 class LoginForm(Form):
@@ -126,7 +127,6 @@ class SignUpForm(Form):
     # def validate(self):
     #     # need to roll out our custom validations?
     #     return True
-    
 ################################# VIEWS ########################################
 
 @app.route('/')
@@ -159,6 +159,7 @@ def settings():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+<<<<<<< HEAD
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None:
@@ -193,6 +194,7 @@ def signup():
         return redirect(url_for('login'))
     else:                                                   
         return render_template('signup.html', form=form)
+
     
     
 

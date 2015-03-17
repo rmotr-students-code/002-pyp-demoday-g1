@@ -2,5 +2,15 @@
 {% block title %}Contact{% endblock %}
 
 {% block content %}
-<h1>Contact info here, maybe email routing</h1>
+<h1>DB:</h1>
+
+<ul>
+	{% for user in users %}
+	<li> <b>user:</b> {{ user.username }}</li>
+	<li><b> email:</b> {{ user.email }}</li>
+	<li> <b>password: </b> {{user.password}}</li>
+	<br>
+	{%endfor%}
+</ul>
+
 {% endblock %}

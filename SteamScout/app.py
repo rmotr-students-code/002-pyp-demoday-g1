@@ -20,6 +20,7 @@ from flask.ext.login import (
         #login_user() takes a user object as arg. 
         #logout_user doesn't require a user object
 
+
 ############################### INITIALIZATION #################################
 
 app = Flask(__name__)
@@ -91,13 +92,29 @@ class Games(db.Model):
     __tablename__='games'
     id = db.Column(db.Integer, primary_key=True)
     game_id = db.Column(db.Integer, unique=True)
-    game_name = db.Column(db.String, unique=True)
+    game_name = db.Column(db.String, unique=False)
     
     def __init__(self, game_id, game_name):
         self.game_id = game_id
         self.game_name = game_name
         
 db.create_all()  # Should we run this each time we run the app?
+
+## Populate the Games database:
+def fill_game_db():
+    """Fills the games table with the id numbers and titles of all the games 
+        in the steam library.""" 
+    game_list = r.get('http://api.steampowered.com/ISteamApps/GetAppList/v0001')
+    for game in game_list.json()['applist']['apps']['app']:
+        if Games.query.filter_by(game_name=game['name']).first():
+            pass
+        else:
+            new_game=Games(game['appid'],game['name'])
+            db.session.add(new_game)
+    db.session.commit()
+
+
+#fill_game_db()
 
 
 ################################# FORMS ########################################
@@ -136,8 +153,7 @@ def home():
 @app.route('/games')
 def games():
     # page that shows all the games.
-    games_request = r.get('http://api.steampowered.com/ISteamApps/GetAppList/v0001')
-    all_games = [game for game in (games_request.json()["applist"]["apps"]["app"])]
+    all_games = Games.query.order_by(Games.game_name)
     return render_template('games.html', all_games=all_games)
 
 @app.route('/developers')

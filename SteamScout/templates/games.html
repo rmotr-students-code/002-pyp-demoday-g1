@@ -2,9 +2,11 @@
 {% block title %}Game Library{% endblock %}
 
 {% block content %}
-
+<ul>
 {% for game in all_games %}
-    <p>{{ game['name'] }}</p>
+    <li>{{ game.game_name }}</li>
+    <li>{{ game.game_id }}</li>
+    <br>
 {% endfor %}
-
+</ul>
 {% endblock %}

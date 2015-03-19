@@ -10,8 +10,11 @@ import requests as r
 from flask_wtf import Form
 # from flask_wtf import Form, TextField, PasswordField, BooleanField
 # from flask_wtf.validators import Required, Length, Email, EqualTo
-from wtforms import TextField, PasswordField, BooleanField
-from wtforms.validators import Required, Length, Email, EqualTo
+from wtforms import (
+    TextField, PasswordField, BooleanField, IntegerField, DecimalField,
+    RadioField
+    )
+from wtforms.validators import Required, Length, Email, EqualTo, NumberRange
 
 #### Logins #####
 from flask.ext.login import (
@@ -79,15 +82,14 @@ class Preferences(db.Model):
     preference_id=db.Column(db.Integer, primary_key=True)
     user_id=db.Column(db.Integer,db.ForeignKey('user.id'))
     game_id=db.Column(db.Integer)
+    game_name = db.Column(db.String, unique=True)
     threshold_amount=db.Column(db.Float)
-    threshold_percent=db.Column(db.Float)
     
-    def __init__(self, user_id, game_id, threshold_amount, threshold_percent):
-    
+    def __init__(self, user_id, game_id, game_name, threshold_amount):    
         self.user_id = user_id
         self.game_id = game_id
-        self.threshhold_amountt = threshold_amount
-        self.threshold_percent = threshold_percent
+        self.game_name = game_name
+        self.threshold_amount = threshold_amount
 
 class Games(db.Model):
     __tablename__='games'
@@ -117,6 +119,22 @@ def fill_game_db():
 
 #fill_game_db()
 
+#Some helpers:
+def percent_to_price(percent, initial_price):
+    """Convert percent preference to discounted amount for db storage"""
+    decimal_percent = percent / 100.0
+    amount = initial_price - (initial_price*decimal_percent)
+    return round(amount,2)
+
+def format_price(price):
+    """Formats price by inserting a decimal point in the appropriate place."""
+    listify = list(str(price))
+    if price < 100: #.99 cents represented as 99
+        listify.insert(0, '.')
+        return float("".join(listify))
+    else:
+        listify.insert(-2,'.')
+        return float("".join(listify))
 
 ################################# FORMS ########################################
 
@@ -141,10 +159,15 @@ class SignUpForm(Form):
                
     confirm = PasswordField('Please Repeat your Password', validators= [
             Required("Please repeat your password")])
-        
-    # def validate(self):
-    #     # need to roll out our custom validations?
-    #     return True
+     
+class PercentPref(Form):
+    threshold_percent = IntegerField('percent threshold', validators=[Required("Please enter a number between 1-100"),
+                                                                      NumberRange(min=1, max=100)])
+class AmountPref(Form):
+    threshold_amount = DecimalField('amount threshold', validators=[Required("Please enter an amount between .01 and 1000.00"),
+                                                                    NumberRange(min=.01, max=1000.0)])
+
+
 ################################# VIEWS ########################################
 
 @app.route('/')
@@ -157,26 +180,59 @@ def games():
     all_games = Games.query.order_by(Games.game_name)
     return render_template('games.html', all_games=all_games)
 
-@app.route('/games/<game_name>')
+@app.route('/games/<game_name>', methods=['GET','POST'])
 def game_name(game_name):
     title = game_name
     game = Games.query.filter_by(game_name=game_name).first()
     id_num=game.game_id
-    
+    percent_form = PercentPref()
+    amount_form = AmountPref() 
+
     price_info = get_price_info(id_num)
     if price_info != None:
-        current_price = price_info['current_price']
-        initial_price = price_info['initial_price']
+        current_price = format_price(price_info['current_price'])
+        initial_price = format_price(price_info['initial_price'])
         discount = price_info['discount_percent']
     else:
         current_price, initial_price, discount = None, None, None
 
-    #allow user to add the game to their preferences
+    if percent_form.validate_on_submit():
+        percent = percent_form.threshold_percent.data
+        final_amt = percent_to_price(percent, initial_price)
+        #overwrites previous preference data if there is any
+        if Preferences.query.filter_by(game_name=game_name).first():
+            old_pref = Preferences.query.filter_by(game_name=game_name).first()
+            db.session.delete(old_pref)
+            db.session.commit()
+        new_pref = Preferences(session['user_id'],
+                               id_num,
+                               game_name,
+                               final_amt)
+        db.session.add(new_pref)
+        db.session.commit()
+        return redirect(url_for('settings'))
+
+    elif amount_form.validate_on_submit():
+        #overwrites previous preference data if there is any
+        if Preferences.query.filter_by(game_name=game_name).first():
+            old_pref = Preferences.query.filter_by(game_name=game_name).first()
+            db.session.delete(old_pref)
+            db.session.commit()
+        new_pref = Preferences(session['user_id'],
+                               id_num,
+                               game_name,
+                               amount_form.threshold_amount.data)
+        db.session.add(new_pref)
+        db.session.commit()
+        return redirect(url_for('settings'))
+    
     return render_template('game_page.html', current_price=current_price,
                                              initial_price=initial_price,
                                              discount=discount,
                                              game_title=title,
-                                             id_num=id_num)
+                                             id_num=id_num,
+                                             percent_form=percent_form,
+                                             amount_form=amount_form)
 
 
 @app.route('/developers')
@@ -190,9 +246,10 @@ def contact():
     return render_template('contact.html', users=users)
 
 @login_required
-@app.route('/settings')
+@app.route('/settings', methods=['GET','POST'])
 def settings():
-    pass
+    pref_data= Preferences.query.filter_by(user_id=session['user_id'])
+    return render_template('settings.html', pref_data=pref_data)
 
 # Log in / Log out
 @app.route('/login', methods=['GET', 'POST'])
@@ -207,6 +264,8 @@ def login():
         login_user(user)   
         session['logged_in'] = True
         session['username'] = user.username
+        session['user_id'] = user.id
+        #session['preferences'] = Preferences.query.filter_by(user_id=user.id)
         return redirect(url_for('home'))
     else:
         return render_template('login.html', form=form)

@@ -4,7 +4,7 @@
 {% block content %}
 <ul>
 {% for game in all_games %}
-    <li>{{ game.game_name }}</li>
+    <li><a href="/games/{{ game.game_name }}">{{ game.game_name }}</a></li>
     <li>{{ game.game_id }}</li>
     <br>
 {% endfor %}

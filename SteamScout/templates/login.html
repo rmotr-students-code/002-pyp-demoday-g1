@@ -15,13 +15,13 @@
                                    implements CSRF prevention -->   
         <div class="form-group {% if form.username.errors %} has-error {% endif %}">
            {{ form.username.label }}
-           {{ form.username(size=20) }} 
+           {{ form.username(size=20, class="form-control input-lg") }} 
            <p class="help-block">{{ form.username.errors[0] }}</p>
         </div>
 
         <div class="form-group {% if form.username.errors %} has-error {% endif %}">
            {{ form.password.label }}
-           {{ form.password }}
+           {{ form.password(class="form-control input-lg") }}
            <p class="help-block">{{ form.password.errors[0] }}</p>
         </div>
        
@@ -29,6 +29,8 @@
         <button type="submit" class="btn form-control btn-success">Login</button>
 
       </form>
+      <br>
+      <p>Don't have an account? <a href="{{ url_for('signup') }}">Click here to sign up!</a></p>
     </center>
     </div>
   </div>

@@ -14,9 +14,13 @@ def get_game_id(game_title):
 def get_price_info(game_id):
 	game_page = r.get('http://store.steampowered.com/api/appdetails?appids={}'.format(game_id))
 	formatted = game_page.json()
-	price_info = {}
-	price_info['current_price']=formatted[str(game_id)]['data']['price_overview']['final']
-	price_info['inital_price']=formatted[str(game_id)]['data']['price_overview']['initial']
-	price_info['discount_percent']=formatted[str(game_id)]['data']['price_overview']['discount_percent']
-	return price_info
+	try: 
+		price_info = dict(
+			current_price=formatted[str(game_id)]['data']['price_overview']['final'],
+			initial_price=formatted[str(game_id)]['data']['price_overview']['initial'],
+			discount_percent=formatted[str(game_id)]['data']['price_overview']['discount_percent'])
+		return price_info
+	except KeyError:
+		return None	
+
 

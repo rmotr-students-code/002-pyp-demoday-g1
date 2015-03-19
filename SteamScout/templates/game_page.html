@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}{{ game_title }}{% endblock %}
+
+{% block content %}
+<div>
+	<div>
+		{% if initial_price %}
+		<h1> {{ game_title }} </h1>
+		<ul>
+			<li>id#: {{ id_num }}</li>
+			<li>Current Price: {{ current_price }}</li>
+			<li>Discount Percent: {{ discount }}%</li>
+			<li>Retail Price: {{ initial_price }}</li>
+		</ul>
+		{% else %}
+		<p>Sorry. The item you've selected is either not a game at all, a demo, or
+		never had a price to begin with!<br>
+		Try picking another <a href="{{ url_for('games') }}">game!</a>
+		</p>
+		{% endif %}
+		
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+
+<div>
+  <div>
+    {% if current_user.is_authenticated() %}
+    <ul>
+      {% for row in pref_data %}
+      <li><b>game id:</b>{{ row.game_id }}</li>
+      <li><b>game title:</b> {{ row.game_name }}</li>
+      <li><b>amount threshold:</b> {{ row.threshold_amount }}</li><br>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

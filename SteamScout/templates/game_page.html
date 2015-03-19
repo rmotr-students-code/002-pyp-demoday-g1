@@ -12,14 +12,44 @@
 			<li>Discount Percent: {{ discount }}%</li>
 			<li>Retail Price: {{ initial_price }}</li>
 		</ul>
+		<br>
+		<br>
+
+			{% if current_user.is_authenticated() %}
+			<h2>Enter a percentage threshold</h2><br>
+				<form action="" method="post">
+					{{ percent_form.hidden_tag() }}	
+				<div class="form-group {% if percent_form.threshold_percent.errors %} has-error {% endif %}">
+					{{ percent_form.threshold_percent }}<br>
+					<p class="help-block">{{ percent_form.threshold_percent.errors[0] }}</p>
+				</div>
+					<button type="submit" class="btn form-control btn-success">Submit</button>
+				</form>
+				<br>
+				<br>
+			<h2>Enter an amount threshold</h2><br>
+				<form action="" method="post">
+					{{ amount_form.hidden_tag() }}
+					<div class="form-group {% if amount_form.threshold_amount.errors %} has-error {% endif %}">
+					{{ amount_form.threshold_amount }}<br>
+					<p class="help-block">{{ amount_form.threshold_amount.errors[0] }}</p>
+				</div>
+					<button type="submit" class="btn form-control btn-success">Submit</button>
+				</form>
+
+				{% else %}
+			<p><a href="{{ url_for('login')}}">Login</a> to monitor this game!</p>
+			{% endif %}
+
+
 		{% else %}
 		<p>Sorry. The item you've selected is either not a game at all, a demo, or
 		never had a price to begin with!<br>
 		Try picking another <a href="{{ url_for('games') }}">game!</a>
 		</p>
-		{% endif %}
-		
+		{% endif %}		
 	</div>
+
 </div>
 
 {% endblock %}

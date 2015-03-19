@@ -19,6 +19,7 @@ from flask.ext.login import (
     )
         #login_user() takes a user object as arg. 
         #logout_user doesn't require a user object
+from get_games import get_price_info
 
 
 ############################### INITIALIZATION #################################
@@ -92,13 +93,13 @@ class Games(db.Model):
     __tablename__='games'
     id = db.Column(db.Integer, primary_key=True)
     game_id = db.Column(db.Integer, unique=True)
-    game_name = db.Column(db.String, unique=False)
+    game_name = db.Column(db.String, unique=True)
     
     def __init__(self, game_id, game_name):
         self.game_id = game_id
         self.game_name = game_name
         
-db.create_all()  # Should we run this each time we run the app?
+#db.create_all() 
 
 ## Populate the Games database:
 def fill_game_db():
@@ -155,6 +156,28 @@ def games():
     # page that shows all the games.
     all_games = Games.query.order_by(Games.game_name)
     return render_template('games.html', all_games=all_games)
+
+@app.route('/games/<game_name>')
+def game_name(game_name):
+    title = game_name
+    game = Games.query.filter_by(game_name=game_name).first()
+    id_num=game.game_id
+    
+    price_info = get_price_info(id_num)
+    if price_info != None:
+        current_price = price_info['current_price']
+        initial_price = price_info['initial_price']
+        discount = price_info['discount_percent']
+    else:
+        current_price, initial_price, discount = None, None, None
+
+    #allow user to add the game to their preferences
+    return render_template('game_page.html', current_price=current_price,
+                                             initial_price=initial_price,
+                                             discount=discount,
+                                             game_title=title,
+                                             id_num=id_num)
+
 
 @app.route('/developers')
 def show_developors():

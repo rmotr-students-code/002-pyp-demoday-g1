@@ -29,11 +29,12 @@ from get_games import get_price_info
 
 app = Flask(__name__)
 app.config.from_object('config')        #specify your own database root
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////users/alan/desktop/steamscout.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/ubuntu/workspace/SteamScout/steamscout.db'
 db = SQLAlchemy(app)
 Bootstrap(app)
 
 #Required for sessions
+# urlsafe64 needed 
 app.secret_key = 'change_this_later'
 
 ################################## LOGINS ######################################
@@ -128,14 +129,18 @@ def percent_to_price(percent, initial_price):
 
 def format_price(price):
     """Formats price by inserting a decimal point in the appropriate place."""
-    listify = list(str(price))
-    if price < 100: #.99 cents represented as 99
-        listify.insert(0, '.')
-        return float("".join(listify))
-    else:
-        listify.insert(-2,'.')
-        return float("".join(listify))
-
+    # listify = list(str(price))
+    # if price < 100: #.99 cents represented as 99
+    #     listify.insert(0, '.')
+    #     return float("".join(listify))
+    # else:
+    #     listify.insert(-2,'.')
+    #     return float("".join(listify))
+    
+    return "${:.2f}".format(float(price)/100.0) 
+    # For examaple 99 returns as $0.99 and
+    # 199 returns as $1.99.
+    
 ################################# FORMS ########################################
 
 class LoginForm(Form):
@@ -166,7 +171,8 @@ class PercentPref(Form):
 class AmountPref(Form):
     threshold_amount = DecimalField('amount threshold', validators=[Required("Please enter an amount between .01 and 1000.00"),
                                                                     NumberRange(min=.01, max=1000.0)])
-
+class GamesSearch(Form):
+    search_term = TextField('Enter a Game', validators=[Required("Please enter a game to search for")])
 
 ################################# VIEWS ########################################
 
@@ -174,11 +180,20 @@ class AmountPref(Form):
 def home():
     return render_template('home.html')
 
-@app.route('/games')
+@app.route('/games', methods=['GET','POST'])
 def games():
     # page that shows all the games.
     all_games = Games.query.order_by(Games.game_name)
-    return render_template('games.html', all_games=all_games)
+    game_search_form = GamesSearch()
+    if request.method == "POST" and game_search_form.validate(): #validate_on_submit() didn't work?
+        search_term = game_search_form.search_term.data
+        games_found = Games.query.filter(Games.game_name.like("%{}%".format(search_term)))
+        game_search_form = GamesSearch() # Re renders search form
+        return render_template('games_search.html',game_search_form=game_search_form,
+                                                   games_found=games_found)
+    else:
+        return render_template('games.html', all_games=all_games,
+                                             game_search_form=game_search_form)
 
 @app.route('/games/<game_name>', methods=['GET','POST'])
 def game_name(game_name):
@@ -202,6 +217,7 @@ def game_name(game_name):
         #overwrites previous preference data if there is any
         if Preferences.query.filter_by(game_name=game_name).first():
             old_pref = Preferences.query.filter_by(game_name=game_name).first()
+            # update function
             db.session.delete(old_pref)
             db.session.commit()
         new_pref = Preferences(session['user_id'],
@@ -258,6 +274,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None:
+            # flash message
             return render_template('login.html', form=form)
         if user.password != form.password.data:
             return render_template('login.html', form=form)
@@ -299,7 +316,7 @@ def signup():
 if __name__ == "__main__":
     # create_app().run(host='0.0.0.0', port=8080, debug=True) 
     # We have to remember to change debug = True back to False if we deply to heroku
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=False)
     # site url: https://002-pyp-demoday-g1-chanchar.c9.io
     
     # server error: Port being used ... yada yada

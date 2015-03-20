@@ -5,13 +5,32 @@
 <div>
   <div>
     {% if current_user.is_authenticated() %}
-    <ul>
-      {% for row in pref_data %}
-      <li><b>game id:</b>{{ row.game_id }}</li>
-      <li><b>game title:</b> {{ row.game_name }}</li>
-      <li><b>amount threshold:</b> {{ row.threshold_amount }}</li><br>
-      {% endfor %}
-    </ul>
+      {% if preferences_count == 0 %}
+      <div class="container">
+        <h2>Your saved alerts and preferences will go here!</h2>
+        <h3>Go search for games and set a scout!</h3>
+        <p>Add a redirect button to search bar here...</p>
+      </div>
+      {% else %}
+      <div class="container">
+        <h1>Your Current Scouts</h1><br>
+          <div class="panel panel-default">
+          {% for row in pref_data %}
+            <div class="panel-heading">
+              <h3 class="panel-title">{{ row.game_name }}</h3>
+            </div>
+            <div class="panel-body">
+              <p>Game ID: {{row.game_id }}</p>
+              <p>Scout Amount:</b> {{ "${:.2f}".format(row.threshold_amount) }}</p>
+              <p>Add Delete/Update button here</p>
+            </div>
+        
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    {% else %}
+    <p>You have not signed in</p> 
     {% endif %}
   </div>
 </div>

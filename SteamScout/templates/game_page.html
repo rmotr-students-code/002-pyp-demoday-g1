@@ -2,38 +2,27 @@
 {% block title %}{{ game_title }}{% endblock %}
 
 {% block content %}
-<div>
+<div class='container'>
 	<div>
 		{% if initial_price %}
 		<h1> {{ game_title }} </h1>
 		<ul>
-			<li>id#: {{ id_num }}</li>
+			<li>Game ID: {{ id_num }}</li>
 			<li>Current Price: {{ current_price }}</li>
 			<li>Discount Percent: {{ discount }}%</li>
 			<li>Retail Price: {{ initial_price }}</li>
 		</ul>
 		<br>
-		<br>
-
 			{% if current_user.is_authenticated() %}
-			<h2>Enter a percentage threshold</h2><br>
-				<form action="" method="post">
-					{{ percent_form.hidden_tag() }}	
-				<div class="form-group {% if percent_form.threshold_percent.errors %} has-error {% endif %}">
-					{{ percent_form.threshold_percent }}<br>
-					<p class="help-block">{{ percent_form.threshold_percent.errors[0] }}</p>
-				</div>
-					<button type="submit" class="btn form-control btn-success">Submit</button>
-				</form>
-				<br>
-				<br>
+			<!--Moved percent threshold form to parts/percent_threshold.html-->
 			<h2>Enter an amount threshold</h2><br>
 				<form action="" method="post">
 					{{ amount_form.hidden_tag() }}
+					
 					<div class="form-group {% if amount_form.threshold_amount.errors %} has-error {% endif %}">
 					{{ amount_form.threshold_amount }}<br>
 					<p class="help-block">{{ amount_form.threshold_amount.errors[0] }}</p>
-				</div>
+					</div>
 					<button type="submit" class="btn form-control btn-success">Submit</button>
 				</form>
 

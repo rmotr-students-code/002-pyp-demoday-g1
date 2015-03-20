@@ -70,7 +70,7 @@ class User(db.Model, UserMixin):
         self.password = password
         
     def __repr__(self):
-        return '<name: {}>'.format(self.username)
+        return '<ID: {} name: {}>'.format(self.id,self.username)
     
     #Methods included by UserMixin:
     """
@@ -91,6 +91,10 @@ class Preferences(db.Model):
         self.game_id = game_id
         self.game_name = game_name
         self.threshold_amount = threshold_amount
+        
+    def __repr__(self):
+        return 'UserID: {} -- Game: {} -- Threshold: {}>'.format(self.user_id,
+                                        self.game_name, self.threshold_amount)
 
 class Games(db.Model):
     __tablename__='games'
@@ -101,7 +105,9 @@ class Games(db.Model):
     def __init__(self, game_id, game_name):
         self.game_id = game_id
         self.game_name = game_name
-        
+ 
+ 
+### Uncomment to create DB ####        
 #db.create_all() 
 
 ## Populate the Games database:
@@ -113,11 +119,12 @@ def fill_game_db():
         if Games.query.filter_by(game_name=game['name']).first():
             pass
         else:
+            # Change to add more info including game images, etc based on url. 
             new_game=Games(game['appid'],game['name'])
             db.session.add(new_game)
     db.session.commit()
 
-
+### Uncomment to load the Games table ####
 #fill_game_db()
 
 #Some helpers:
@@ -140,6 +147,7 @@ def format_price(price):
     return "${:.2f}".format(float(price)/100.0) 
     # For examaple 99 returns as $0.99 and
     # 199 returns as $1.99.
+    # May take off "$" since currency type changes
     
 ################################# FORMS ########################################
 
@@ -200,7 +208,7 @@ def game_name(game_name):
     title = game_name
     game = Games.query.filter_by(game_name=game_name).first()
     id_num=game.game_id
-    percent_form = PercentPref()
+    # percent_form = PercentPref()
     amount_form = AmountPref() 
 
     price_info = get_price_info(id_num)
@@ -211,33 +219,35 @@ def game_name(game_name):
     else:
         current_price, initial_price, discount = None, None, None
 
-    if percent_form.validate_on_submit():
-        percent = percent_form.threshold_percent.data
-        final_amt = percent_to_price(percent, initial_price)
-        #overwrites previous preference data if there is any
-        if Preferences.query.filter_by(game_name=game_name).first():
-            old_pref = Preferences.query.filter_by(game_name=game_name).first()
-            # update function
-            db.session.delete(old_pref)
-            db.session.commit()
-        new_pref = Preferences(session['user_id'],
-                               id_num,
-                               game_name,
-                               final_amt)
-        db.session.add(new_pref)
-        db.session.commit()
-        return redirect(url_for('settings'))
+    # if percent_form.validate_on_submit():
+    #     percent = percent_form.threshold_percent.data
+    #     final_amt = percent_to_price(percent, initial_price)
+    #     #overwrites previous preference data if there is any
+    #     if Preferences.query.filter_by(game_name=game_name).first():
+    #         old_pref = Preferences.query.filter_by(game_name=game_name).first()
+    #         # update function
+    #         db.session.delete(old_pref)
+    #         db.session.commit()
+    #     new_pref = Preferences(session['user_id'],
+    #                           id_num,
+    #                           game_name,
+    #                           final_amt)
+    #     db.session.add(new_pref)
+    #     db.session.commit()
+    #     return redirect(url_for('settings'))
 
-    elif amount_form.validate_on_submit():
+    if amount_form.validate_on_submit():
         #overwrites previous preference data if there is any
         if Preferences.query.filter_by(game_name=game_name).first():
+            # change to update()
             old_pref = Preferences.query.filter_by(game_name=game_name).first()
             db.session.delete(old_pref)
             db.session.commit()
+            
         new_pref = Preferences(session['user_id'],
                                id_num,
                                game_name,
-                               amount_form.threshold_amount.data)
+                               format_price(amount_form.threshold_amount.data))
         db.session.add(new_pref)
         db.session.commit()
         return redirect(url_for('settings'))
@@ -247,7 +257,7 @@ def game_name(game_name):
                                              discount=discount,
                                              game_title=title,
                                              id_num=id_num,
-                                             percent_form=percent_form,
+                                             # percent_form=percent_form,
                                              amount_form=amount_form)
 
 
@@ -265,7 +275,9 @@ def contact():
 @app.route('/settings', methods=['GET','POST'])
 def settings():
     pref_data= Preferences.query.filter_by(user_id=session['user_id'])
-    return render_template('settings.html', pref_data=pref_data)
+    preferences_count = Preferences.query.filter_by(user_id=session['user_id']).count()
+    return render_template('settings.html', pref_data=pref_data,
+                                            preferences_count=preferences_count)
 
 # Log in / Log out
 @app.route('/login', methods=['GET', 'POST'])
@@ -309,16 +321,11 @@ def signup():
     else:                                                   
         return render_template('signup.html', form=form)
 
-    
-    
-
-
 if __name__ == "__main__":
     # create_app().run(host='0.0.0.0', port=8080, debug=True) 
     # We have to remember to change debug = True back to False if we deply to heroku
     app.run(host='0.0.0.0', port=8080, debug=False)
     # site url: https://002-pyp-demoday-g1-chanchar.c9.io
-    
     # server error: Port being used ... yada yada
     
     # terminal: "lsof -i :8080" looks for a process that using port 8080.

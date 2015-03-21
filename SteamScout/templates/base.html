@@ -31,21 +31,28 @@
             SteamScout
           </a>
         </div>        
-        
+
+                  
           <ul class="nav navbar-nav navbar-right">
-            {% if current_user.is_authenticated() %}
-            <li> <a href="/settings">{{ current_user.username }}</a></li>
+          {% if current_user.is_authenticated() %}
+            <li><a href="/settings">{{ current_user.username }}</a></li>
             <li><a href="/games">Game Library</a></li>
-            <l1><a href="/logout">Log out</a></li>
-            {% else %}
+            <li><a href="/logout">Log out</a></li>
+          {% else %}
             <li><a href="/games">Game Library</a></li>
             <li><a href="/login">Log In</a></li>
-            {% endif %}
+          {% endif %}
           </ul>
         </div>
       </div>
     </nav>
-    
+    <div>
+    {% block content -%}
+    <!--This is where each page will go-->
+    {%- endblock content %}
+    </div>
+
+    <div>
     <nav class="navbar navbar-default navbar-fixed-bottom">
       <div class="container-fluid">
         <div>
@@ -57,11 +64,9 @@
         </div>
       </div>
     </nav>
+    </div>
     {%- endblock navbar %}
     
-    {% block content -%}
-    <!--This is where each page will go-->
-    {%- endblock content %}
 
     {% block scripts %}
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>

@@ -254,7 +254,7 @@ def game_name(game_name):
         new_pref = Preferences(session['user_id'],
                                id_num,
                                title,
-                               float(format_price(amount_form.threshold_amount.data)[1:]))
+                               amount_form.threshold_amount.data)
         db.session.add(new_pref)
         db.session.commit()
         return redirect(url_for('settings'))

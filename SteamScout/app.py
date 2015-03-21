@@ -29,7 +29,7 @@ from get_games import get_price_info
 
 app = Flask(__name__)
 app.config.from_object('config')        #specify your own database root
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/ubuntu/workspace/SteamScout/steamscout.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/ubuntu/workspace/SteamScout/steamscout.db' #Moved to config
 db = SQLAlchemy(app)
 Bootstrap(app)
 
@@ -86,7 +86,7 @@ class Preferences(db.Model):
     game_name = db.Column(db.String, unique=True)
     threshold_amount=db.Column(db.Float)
     
-    def __init__(self, user_id, game_id, game_name, threshold_amount):    
+    def __init__(self, user_id, game_id, game_name, threshold_amount): 
         self.user_id = user_id
         self.game_id = game_id
         self.game_name = game_name
@@ -106,6 +106,8 @@ class Games(db.Model):
         self.game_id = game_id
         self.game_name = game_name
  
+    def __repr__(self):
+        return 'Game:{} -- Game ID{}'.format(self.game_name, self.game_id)
  
 ### Uncomment to create DB ####        
 #db.create_all() 
@@ -116,16 +118,18 @@ def fill_game_db():
         in the steam library.""" 
     game_list = r.get('http://api.steampowered.com/ISteamApps/GetAppList/v0001')
     for game in game_list.json()['applist']['apps']['app']:
-        if Games.query.filter_by(game_name=game['name']).first():
-            pass
-        else:
-            # Change to add more info including game images, etc based on url. 
-            new_game=Games(game['appid'],game['name'])
-            db.session.add(new_game)
+        if int(game['appid']) % 10 == 0:
+            if Games.query.filter_by(game_name=game['name']).first():
+                pass
+            else:
+                new_game=Games(game['appid'],game['name'])
+                db.session.add(new_game)
     db.session.commit()
 
 ### Uncomment to load the Games table ####
-#fill_game_db()
+# Games.query.delete() # rerun to refresh games table
+# db.session.commit()
+# fill_game_db()
 
 #Some helpers:
 def percent_to_price(percent, initial_price):
@@ -196,9 +200,11 @@ def games():
     if request.method == "POST" and game_search_form.validate(): #validate_on_submit() didn't work?
         search_term = game_search_form.search_term.data
         games_found = Games.query.filter(Games.game_name.like("%{}%".format(search_term)))
+        found_count = games_found.count()
         game_search_form = GamesSearch() # Re renders search form
         return render_template('games_search.html',game_search_form=game_search_form,
-                                                   games_found=games_found)
+                                                   games_found=games_found,
+                                                   found_count=found_count)
     else:
         return render_template('games.html', all_games=all_games,
                                              game_search_form=game_search_form)
@@ -216,8 +222,9 @@ def game_name(game_name):
         current_price = format_price(price_info['current_price'])
         initial_price = format_price(price_info['initial_price'])
         discount = price_info['discount_percent']
+        header_image = price_info['header_image']
     else:
-        current_price, initial_price, discount = None, None, None
+        current_price, initial_price, discount, header_image = None, None, None, None
 
     # if percent_form.validate_on_submit():
     #     percent = percent_form.threshold_percent.data
@@ -246,8 +253,8 @@ def game_name(game_name):
             
         new_pref = Preferences(session['user_id'],
                                id_num,
-                               game_name,
-                               format_price(amount_form.threshold_amount.data))
+                               title,
+                               float(format_price(amount_form.threshold_amount.data)[1:]))
         db.session.add(new_pref)
         db.session.commit()
         return redirect(url_for('settings'))
@@ -257,6 +264,7 @@ def game_name(game_name):
                                              discount=discount,
                                              game_title=title,
                                              id_num=id_num,
+                                             header_image=header_image,
                                              # percent_form=percent_form,
                                              amount_form=amount_form)
 
@@ -268,8 +276,10 @@ def show_developors():
 
 @app.route('/contact')
 def contact():
-    users = User.query.all() # This works despite the error? C9Issue? - Martin
-    return render_template('contact.html', users=users)
+    users = User.query.all() 
+    preferences = Preferences.query.all()
+    return render_template('contact.html', users=users,
+                                           preferences=preferences)
 
 @login_required
 @app.route('/settings', methods=['GET','POST'])
@@ -278,6 +288,8 @@ def settings():
     preferences_count = Preferences.query.filter_by(user_id=session['user_id']).count()
     return render_template('settings.html', pref_data=pref_data,
                                             preferences_count=preferences_count)
+
+
 
 # Log in / Log out
 @app.route('/login', methods=['GET', 'POST'])

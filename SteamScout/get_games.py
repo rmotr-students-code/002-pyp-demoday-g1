@@ -18,7 +18,8 @@ def get_price_info(game_id):
 		price_info = dict(
 			current_price=formatted[str(game_id)]['data']['price_overview']['final'],
 			initial_price=formatted[str(game_id)]['data']['price_overview']['initial'],
-			discount_percent=formatted[str(game_id)]['data']['price_overview']['discount_percent'])
+			discount_percent=formatted[str(game_id)]['data']['price_overview']['discount_percent'],
+			header_image=formatted[str(game_id)]['data']['header_image'])
 		return price_info
 	except KeyError:
 		return None	

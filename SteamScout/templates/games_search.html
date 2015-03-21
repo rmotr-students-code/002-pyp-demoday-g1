@@ -19,14 +19,21 @@
         <button type="submit" class="btn form-control btn-success">Search!</button>
       </form><br>
     <u><h1>Search Results</h1></u><br>  
-      <ul>
-        {% for game_found in games_found %}
-        <li><a href="/games/{{ game_found.game_name }}">{{ game_found.game_name }}</a></li>
-        <li>{{ game_found.game_id }}</li><br>
+    {% if found_count == 0 %}
+      <h1>No games were found!</h1>
+    {% else %}
+      <p>Your search returned {{ found_count }} results</p>
+          <div class="panel panel-default">
+          {% for game_found in games_found %}
+            <div class="panel-heading">
+              <h3 class="panel-title"><a href="/games/{{ game_found.game_name }}">{{ game_found.game_name }}</h3>
+            </div>
+            <div class="panel-body">
+              <p>Game ID: {{ game_found.game_id }}</p>
+            </div>
         {% endfor %}
-        </ul>
-    </div>
-  </div>
+          </div>
+    {% endif %}
 </div>
 
 

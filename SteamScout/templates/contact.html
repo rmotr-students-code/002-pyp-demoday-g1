@@ -6,9 +6,20 @@
 
 <ul>
 	{% for user in users %}
+	<li> <b>user id:</b> {{user.id}}</li>
 	<li> <b>user:</b> {{ user.username }}</li>
-	<li><b> email:</b> {{ user.email }}</li>
+	<li> <b>email:</b> {{ user.email }}</li>
 	<li> <b>password: </b> {{user.password}}</li>
+	<br>
+	{%endfor%}
+</ul>
+<h2>Preferences:</h2>
+
+<ul>
+	{% for preference in preferences %} 
+	<li> <b>user id:</b> {{ preference.user_id }}</li>
+	<li> <b>Game:</b> {{ preference.game_name }}</li>
+	<li> <b>Threshold:</b> {{ preference.threshold_amount }}</li>
 	<br>
 	{%endfor%}
 </ul>

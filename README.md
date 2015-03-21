@@ -18,8 +18,8 @@ when a game that you're interested in drops down to the price you set.
 
 ### Optional
 
-+ make the individual games look pretty
-+ see if theres a way to include game cover art, trailers, etc in the individual game page
++ make the individual games look pretty - Improved it, but it could be better..
++ see if theres a way to include game cover art, trailers, etc in the individual game page - added cover image on top.
 + Change generic variables to be more specific. Ex. form should should be login_form
 + Add to the settings page when no preferences are set. 
 
@@ -28,4 +28,4 @@ when a game that you're interested in drops down to the price you set.
 - Ideally, figure a way to only put games into the gamesDB. 
     - if not 2, protect the site from apps that dont have a price_info section.
 - build way to search through games library - Basic Functionality
-- Changes amount format on settings 
+- Changes amount format, list view on settings 

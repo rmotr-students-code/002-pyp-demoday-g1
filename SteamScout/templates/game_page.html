@@ -2,25 +2,29 @@
 {% block title %}{{ game_title }}{% endblock %}
 
 {% block content %}
-<div class='container'>
-	<div>
+<div class="container">
+	<div class="jumbotron" style="background: url('{{ header_image }}') no-repeat center center;">
+	</div>
+	<div class="well col-md-6 col-md-offset-3 text-center">
 		{% if initial_price %}
-		<h1> {{ game_title }} </h1>
-		<ul>
-			<li>Game ID: {{ id_num }}</li>
-			<li>Current Price: {{ current_price }}</li>
-			<li>Discount Percent: {{ discount }}%</li>
-			<li>Retail Price: {{ initial_price }}</li>
-		</ul>
-		<br>
+
+			<h1> {{ game_title }} </h1>
+			<p>Game ID: {{ id_num }}</p>
+			<p>Current Price: {{ current_price }}</p>
+			<p>Discount Percent: {{ discount }}%</p>
+			<p>Retail Price: {{ initial_price }}</p>
+
+
 			{% if current_user.is_authenticated() %}
 			<!--Moved percent threshold form to parts/percent_threshold.html-->
-			<h2>Enter an amount threshold</h2><br>
+
+				<br><h3>Set a Scout </h3>
+				<p>The scout will alert you when this game reaches this price:</p>
 				<form action="" method="post">
 					{{ amount_form.hidden_tag() }}
 					
 					<div class="form-group {% if amount_form.threshold_amount.errors %} has-error {% endif %}">
-					{{ amount_form.threshold_amount }}<br>
+					{{ amount_form.threshold_amount(class="form-control input-lg") }}<br>
 					<p class="help-block">{{ amount_form.threshold_amount.errors[0] }}</p>
 					</div>
 					<button type="submit" class="btn form-control btn-success">Submit</button>
@@ -37,6 +41,7 @@
 		Try picking another <a href="{{ url_for('games') }}">game!</a>
 		</p>
 		{% endif %}		
+		
 	</div>
 
 </div>

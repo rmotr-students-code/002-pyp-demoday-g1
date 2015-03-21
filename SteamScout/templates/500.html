@@ -1,0 +1,41 @@
+{% block doc -%}
+<!DOCTYPE html>
+<html{% block html_attribs %}{% endblock html_attribs %}>
+{%- block html %}
+  <head>
+    {%- block head %}
+    <title>{% block title %}{% endblock title %} | SteamScout</title>
+
+    {%- block styles %}
+    <!-- Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap.min.css') }}">-->
+    <!--A custom css file in static that you can use to change default bootstrap features-->
+    <!--<link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='custom.css') }}">-->
+    {%- endblock styles %}
+    {% block extra_styles %}
+    {% endblock extra_styles %}
+    {%- endblock head %}
+  </head>
+  
+  <body{% block body_attribs %}{% endblock body_attribs %}>
+    {% block body -%}
+    
+    <div class="row text-center">
+    <img src="http://memetogo.com/media/created/fedez6.jpg">
+    <p>Internal Server Error - Recheck your code.</p>
+    <a href="javascript:history.back()" class="btn btn-lg btn-danger">Go Back</a>
+    </div>
+    
+    {% block scripts %}
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    {%- endblock scripts %}
+    {% block extra_scripts %}
+    {% endblock extra_scripts %}
+    {%- endblock body %}
+  </body>
+{%- endblock html %}
+</html>
+{% endblock doc -%}

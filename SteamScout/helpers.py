@@ -1,6 +1,27 @@
 import requests as r
 import json
 
+def percent_to_price(percent, initial_price):
+    """Convert percent preference to discounted amount for db storage"""
+    decimal_percent = percent / 100.0
+    amount = initial_price - (initial_price*decimal_percent)
+    return round(amount,2)
+
+def format_price(price):
+    """Formats price by inserting a decimal point in the appropriate place."""
+    # listify = list(str(price))
+    # if price < 100: #.99 cents represented as 99
+    #     listify.insert(0, '.')
+    #     return float("".join(listify))
+    # else:
+    #     listify.insert(-2,'.')
+    #     return float("".join(listify))
+    
+    return "${:.2f}".format(float(price)/100.0) 
+    # For examaple 99 returns as $0.99 and
+    # 199 returns as $1.99.
+    # May take off "$" since currency type changes
+    
 #http://api.steampowered.com/ISteamApps/GetAppList/v0001
 
 def get_game_id(game_title):
@@ -23,5 +44,3 @@ def get_price_info(game_id):
 		return price_info
 	except KeyError:
 		return None	
-
-

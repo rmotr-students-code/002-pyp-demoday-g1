@@ -1,5 +1,5 @@
 from flask.ext.login import UserMixin
-from . import app, db 
+from SteamScout import app, db 
 # UserMixin contains the properties andmethods required by flask-login 
 # for our user object
 class User(db.Model, UserMixin): 
@@ -58,4 +58,4 @@ class Games(db.Model):
         return 'Game:{} -- Game ID{}'.format(self.game_name, self.game_id)
  
 ### Uncomment to create DB ####        
-#db.create_all()    
+#db.create_all()

@@ -1,4 +1,4 @@
-from SteamScout import app, db, login_manager
+from SteamScout import app, db, login_manager, mail
 from forms import LoginForm, SignUpForm, AmountPref, PercentPref, GamesSearch
 from flask import (
     Flask, request, render_template, redirect, 
@@ -9,7 +9,18 @@ from helpers import percent_to_price, format_price, get_price_info
 from flask.ext.login import (
     LoginManager, UserMixin, login_user, logout_user, login_required
     )
+from flask.ext.mail import Message
 
+@app.route('/mail')
+def test_email():
+    msg = Message("Hey it's working now", # apprently the header
+                sender="steam.scout.15@gmail.com",
+                recipients=["steam.scout.15@gmail.com"]) # send to self for testing
+                # sender hopefully will use the default set
+    msg.body = "This is a test email. Check it out in views.py"
+    mail.send(msg)
+    return "Mail sent!"
+    
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(id)
@@ -155,3 +166,7 @@ def signup():
         return redirect(url_for('login'))
     else:                                                   
         return render_template('signup.html', form=form)
+
+
+
+        

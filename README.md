@@ -1,7 +1,7 @@
 # 002-pyp-demoday-g1
-Charlie's angels
-[Overview](https://docs.google.com/document/d/1qt_IZOc579Qe8HO5wrb--vzrk4acdOavfqp7vlH7crw/edit)
-[Basic Wireframes](https://docs.google.com/presentation/d/1vJZhuTA-SrLgKG1RMaPhud2BZqDFzHbbWi4EKOhzvHE/edit#slide=id.p)
+Charlie's angels  
+[Initial Overview Sheet](https://docs.google.com/document/d/1qt_IZOc579Qe8HO5wrb--vzrk4acdOavfqp7vlH7crw/edit)  
+[Basic Wireframes](https://docs.google.com/presentation/d/1vJZhuTA-SrLgKG1RMaPhud2BZqDFzHbbWi4EKOhzvHE/edit#slide=id.p)  
 
 
 ## Purpose
@@ -10,7 +10,6 @@ when a game that you're interested in drops down to the price you set.
 
 ### Required
 
-+ Split components into separate files. App.py is too big for one file.
 + Update button in user's settings page.
 + Paginate games library, currently causes significant lag. SQL alchemy has something built in for pagination
 + configure a way for steamscout to email users. - Flask-Mail
@@ -22,10 +21,12 @@ when a game that you're interested in drops down to the price you set.
 
 ### Optional
 
++ validate each integer in the amount threshold form
 + make the individual games look pretty - Improved it, but it could be better..
 + see if theres a way to include game cover art, trailers, etc in the individual game page
 + Change generic variables to be more specific. Ex. form should should be login_form
 + Add to the settings page when no preferences are set. 
++ Add a default currency on games page
 
 ### Completed:
 - format price data. Currently "$4.99" displays as "499" - changed format_prices to make it easier
@@ -34,3 +35,4 @@ when a game that you're interested in drops down to the price you set.
 - build way to search through games library - Basic Functionality
 - Changes amount format, list view on settings 
 - Improve Navbar in base (log out column adding problems)
+- Split components into separate files. App.py is too big for one file.

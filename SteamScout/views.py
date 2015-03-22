@@ -153,7 +153,3 @@ def signup():
         return redirect(url_for('login'))
     else:                                                   
         return render_template('signup.html', form=form)
-
-
-
-        

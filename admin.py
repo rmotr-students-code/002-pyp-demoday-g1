@@ -25,7 +25,7 @@ def reset_game_db():
 
 
 if __name__ == '__main__':           
-    #reset_game_db() 
+    reset_game_db() 
     
 #    msg = Message("Hello",
 #                recipients=['latremom@gmail.com'])

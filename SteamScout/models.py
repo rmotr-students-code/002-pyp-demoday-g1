@@ -1,5 +1,5 @@
 from flask.ext.login import UserMixin
-from SteamScout import app, db 
+from .import app, db 
 # UserMixin contains the properties andmethods required by flask-login 
 # for our user object
 class User(db.Model, UserMixin): 
@@ -31,7 +31,7 @@ class Preferences(db.Model):
     preference_id=db.Column(db.Integer, primary_key=True)
     user_id=db.Column(db.Integer,db.ForeignKey('user.id'))
     game_id=db.Column(db.Integer)
-    game_name = db.Column(db.String, unique=True)
+    game_name = db.Column(db.String, unique=False)
     threshold_amount=db.Column(db.Float)
     
     def __init__(self, user_id, game_id, game_name, threshold_amount): 
@@ -58,4 +58,4 @@ class Games(db.Model):
         return 'Game:{} -- Game ID{}'.format(self.game_name, self.game_id)
  
 ### Uncomment to create DB ####        
-#db.create_all()
+db.create_all()

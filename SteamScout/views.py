@@ -13,10 +13,9 @@ from flask.ext.mail import Message
 
 @app.route('/mail')
 def test_email():
-    msg = Message("Hey it's working now", # apprently the header
+    msg = Message("Hey it's working now",
                 sender="steam.scout.15@gmail.com",
-                recipients=["steam.scout.15@gmail.com"]) # send to self for testing
-                # sender hopefully will use the default set
+                recipients=["steam.scout.15@gmail.com"])
     msg.body = "This is a test email. Check it out in views.py"
     mail.send(msg)
     return "Mail sent!"
@@ -31,10 +30,9 @@ def home():
 
 @app.route('/games', methods=['GET','POST'])
 def games():
-    # page that shows all the games.
     all_games = Games.query.order_by(Games.game_name)
     game_search_form = GamesSearch()
-    if request.method == "POST" and game_search_form.validate(): #validate_on_submit() didn't work?
+    if request.method == "POST" and game_search_form.validate():
         search_term = game_search_form.search_term.data
         games_found = Games.query.filter(Games.game_name.like("%{}%".format(search_term)))
         found_count = games_found.count()
@@ -51,7 +49,6 @@ def game_name(game_name):
     title = game_name
     game = Games.query.filter_by(game_name=game_name).first()
     id_num=game.game_id
-    # percent_form = PercentPref()
     amount_form = AmountPref() 
 
     price_info = get_price_info(id_num)
@@ -62,37 +59,17 @@ def game_name(game_name):
         header_image = price_info['header_image']
     else:
         current_price, initial_price, discount, header_image = None, None, None, None
-
-    # if percent_form.validate_on_submit():
-    #     percent = percent_form.threshold_percent.data
-    #     final_amt = percent_to_price(percent, initial_price)
-    #     #overwrites previous preference data if there is any
-    #     if Preferences.query.filter_by(game_name=game_name).first():
-    #         old_pref = Preferences.query.filter_by(game_name=game_name).first()
-    #         # update function
-    #         db.session.delete(old_pref)
-    #         db.session.commit()
-    #     new_pref = Preferences(session['user_id'],
-    #                           id_num,
-    #                           game_name,
-    #                           final_amt)
-    #     db.session.add(new_pref)
-    #     db.session.commit()
-    #     return redirect(url_for('settings'))
-
     if amount_form.validate_on_submit():
-        #overwrites previous preference data if there is any
-        if Preferences.query.filter_by(game_name=game_name).first():
-            # change to update()
-            old_pref = Preferences.query.filter_by(game_name=game_name).first()
-            db.session.delete(old_pref)
+        if Preferences.query.filter_by(game_name=game_name, user_id=session['user_id']).first():
+            old_preference = Preferences.query.filter_by(game_name=game_name).first()
+            db.session.delete(old_preference)
             db.session.commit()
             
-        new_pref = Preferences(session['user_id'],
-                               id_num,
-                               title,
-                               amount_form.threshold_amount.data)
-        db.session.add(new_pref)
+        new_preference = Preferences(session['user_id'],
+                           id_num,
+                           title,
+                           amount_form.threshold_amount.data)
+        db.session.add(new_preference)
         db.session.commit()
         return redirect(url_for('settings'))
     
@@ -102,7 +79,6 @@ def game_name(game_name):
                                              game_title=title,
                                              id_num=id_num,
                                              header_image=header_image,
-                                             # percent_form=percent_form,
                                              amount_form=amount_form)
 
 @app.route('/developers')
@@ -163,6 +139,17 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
         flash('Registration successful!')
+        msg = Message("Welcome to SteamScout!", # apprently the header
+                sender="steam.scout.15@gmail.com",
+                recipients=[form.email.data])
+        msg.body = """Hello, welcome to SteamScout. You're just about ready
+                    to start tracking all of your favorite games! Your login information
+                    is:
+                        Username: {}
+                        Email: {}
+                        Password: {}
+                    """.format(form.username.data, form.email.data, form.password.data)
+        mail.send(msg)
         return redirect(url_for('login'))
     else:                                                   
         return render_template('signup.html', form=form)

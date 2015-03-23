@@ -50,7 +50,10 @@ def game_name(game_name):
     game = Games.query.filter_by(game_name=game_name).first()
     id_num=game.game_id
     amount_form = AmountPref()
-    preference = Preferences.query.filter_by(game_name=game_name, user_id=session['user_id']).first() 
+    if 'user_id' in session.keys():
+        preference = Preferences.query.filter_by(game_name=game_name, user_id=session['user_id']).first() 
+    else:
+        preference =  None
 
     price_info = get_price_info(id_num)
     if price_info != None:
@@ -159,7 +162,8 @@ def signup():
                         Email: {}
                         Password: {}
                     """.format(form.username.data, form.email.data, form.password.data)
-        mail.send(msg)
+        #Uncomment to have emails sent upon registration     
+     #   mail.send(msg)
         return redirect(url_for('login'))
     else:                                                   
         return render_template('signup.html', form=form)

@@ -49,7 +49,8 @@ def game_name(game_name):
     title = game_name
     game = Games.query.filter_by(game_name=game_name).first()
     id_num=game.game_id
-    amount_form = AmountPref() 
+    amount_form = AmountPref()
+    preference = Preferences.query.filter_by(game_name=game_name, user_id=session['user_id']).first() 
 
     price_info = get_price_info(id_num)
     if price_info != None:
@@ -60,7 +61,7 @@ def game_name(game_name):
     else:
         current_price, initial_price, discount, header_image = None, None, None, None
     if amount_form.validate_on_submit():
-        if Preferences.query.filter_by(game_name=game_name, user_id=session['user_id']).first():
+        if preference:
             old_preference = Preferences.query.filter_by(game_name=game_name).first()
             db.session.delete(old_preference)
             db.session.commit()
@@ -79,7 +80,8 @@ def game_name(game_name):
                                              game_title=title,
                                              id_num=id_num,
                                              header_image=header_image,
-                                             amount_form=amount_form)
+                                             amount_form=amount_form,
+                                             preference=preference)
 
 @app.route('/developers')
 def show_developors():
@@ -100,6 +102,14 @@ def settings():
     preferences_count = Preferences.query.filter_by(user_id=session['user_id']).count()
     return render_template('settings.html', pref_data=pref_data,
                                             preferences_count=preferences_count)
+
+@login_required
+@app.route('/delete', methods=['POST'])
+def delete():
+    preference = Preferences.query.filter_by(user_id=session['user_id'], game_name=request.form['delete']).first()
+    db.session.delete(preference)
+    db.session.commit()
+    return redirect(url_for('settings'))
 
 # Log in / Log out
 @app.route('/login', methods=['GET', 'POST'])

@@ -25,7 +25,12 @@
 					{{ amount_form.threshold_amount(placeholder="19.99", class="form-control input-lg text-center") }}<br>
 					<p class="help-block">{{ amount_form.threshold_amount.errors[0] }}</p>
 					</div>
+					{% if preference %}
+					<button type="submit" class="btn form-control btn-success">Update</button><br>
+					<p><b>Current Scout price:</b> <span style="color: green;">{{ preference.threshold_amount }} </span></p>
+					{% else %}
 					<button type="submit" class="btn form-control btn-success">Submit</button>
+					{% endif %}
 				</form>
 			{% else %}
 			<p><a href="{{ url_for('login')}}">Login</a> to monitor this game!</p>

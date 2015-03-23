@@ -1,6 +1,6 @@
 # Stand alone file to test aspects of the website.
 #from apscheduler.scheduler import Scheduler
-from SteamScout import app, db, Games
+from SteamScout import app, db, models, Games
 import requests as r
 import json
 from SteamScout import mail
@@ -24,7 +24,10 @@ def reset_game_db():
 
 
 
+
+
 if __name__ == '__main__':           
+    db.create_all()
     reset_game_db() 
     
 #    msg = Message("Hello",

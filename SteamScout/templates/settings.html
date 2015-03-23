@@ -22,18 +22,17 @@
             <div class="panel-body">
               <p>Game ID: {{row.game_id }}</p>
               <p>Scout Amount:</b> {{ "${:.2f}".format(row.threshold_amount) }}</p>
-              <div id="Update">
-                    <a href="/games/{{ row.game_name }}" class="btn btn-success">Update</a>   
-                <!--    <p> {{ row.game_name }} </p>    -->   
-              </div><!--end of update -->
-
-              <div id="Delete">
+             <div id="Delete">
                 <form action="{{ url_for('delete') }}" method="POST" name="delete">
                   <!-- hidden value contains the name of the game we're deleting!! -->
                   <input type=hidden value="{{ row.game_name }}"name="delete"></input>
-                  <button type="submit" class="btn btn-danger">Delete</button>
+                  <button type="submit" class="btn pull-right btn-danger">Delete</button>
                 </form>
               </div><!-- end of delete -->
+              <div id="Update">
+                <a href="/games/{{ row.game_name }}" class="btn pull-right btn-success">Update</a>   
+              <!--    <p> {{ row.game_name }} </p>    -->   
+              </div><!--end of update -->
 
             </div>
         

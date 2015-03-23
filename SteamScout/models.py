@@ -58,4 +58,3 @@ class Games(db.Model):
         return 'Game:{} -- Game ID{}'.format(self.game_name, self.game_id)
  
 ### Uncomment to create DB ####        
-db.create_all()

@@ -1,5 +1,33 @@
-import requests as r
+#import requests as r
 import json
+from SteamScout import app, mail
+from flask.ext.mail import Message
+from itsdangerous import URLSafeTimedSerializer 
+
+# User Validations and Token Generation
+def generate_email_token(email):
+    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    token = serializer.dumps(email, salt=app.config['SECURITY_SALT'])
+    return token 
+    
+def confirm_email_token(token, expiration=86400):
+    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    try: 
+        email = serializer.loads(token, salt=app.config['SECURITY_SALT'], max_age=expiration)
+    except: # should be watching for specifically BadTimeSignature and SignatureExpired
+        # add a separate template for failed or expired confirmations 
+        return False        
+    return email 
+    
+# Email and Messaging 
+def send_mail(to, subject, template):
+    new_email = Message(
+                    subject,
+                    recipients=[to],
+                    html=template,
+                    sender=app.config['DEFAULT_MAIL_SENDER']
+                )
+    mail.send(new_email)
 
 def percent_to_price(percent, initial_price):
     """Convert percent preference to discounted amount for db storage"""

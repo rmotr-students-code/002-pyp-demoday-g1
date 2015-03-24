@@ -10,10 +10,12 @@
 					<h1>Users</h1>
 					{% for user in users %}
 						<p>
-						user id: {{user.id}}
-						user: {{ user.username }}
-						email: {{ user.email }}
-						password: {{user.password}}
+						user id: {{user.id}}<br>
+						user: {{ user.username }}<br>
+						email: {{ user.email }}<br>
+						password: {{user.password}}<br>
+						confirmed: {{user.validated}}<br>
+						confirmed on: {{user.validated_on}}
 						</p>
 					{% endfor %}
 				</div>

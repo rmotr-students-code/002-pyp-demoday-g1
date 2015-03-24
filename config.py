@@ -6,9 +6,9 @@ _basedir = os.path.abspath(os.path.dirname(__file__))
 WTF_CSRF_ENABLED = True   #activates CSRF prevention
                           # http://en.wikipedia.org/wiki/Cross-site_request_forgery     
 
-SECRET_KEY = 'change_this_later' #only needed when CSRF is enabled
-                                #Used to create a token that is used to
-                                #validate a form
+SECRET_KEY = 'change_this_later'
+SECURITY_SALT = 'change_this_later_also'
+
 ### APP CONFIG ###
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(_basedir, 'steamscout.db')

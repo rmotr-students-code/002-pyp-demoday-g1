@@ -5,20 +5,11 @@ from flask import (
     session, json, g, flash, url_for
     )
 from models import Games, Preferences, User
-from helpers import percent_to_price, format_price, get_price_info
+from helpers import percent_to_price, format_price, get_price_info, generate_email_token, confirm_email_token, send_mail
 from flask.ext.login import (
     LoginManager, UserMixin, login_user, logout_user, login_required
     )
-from flask.ext.mail import Message
-
-@app.route('/mail')
-def test_email():
-    msg = Message("Hey it's working now",
-                sender="steam.scout.15@gmail.com",
-                recipients=["steam.scout.15@gmail.com"])
-    msg.body = "This is a test email. Check it out in views.py"
-    mail.send(msg)
-    return "Mail sent!"
+import datetime
     
 @login_manager.user_loader
 def load_user(id):
@@ -151,18 +142,33 @@ def signup():
                          form.password.data)
         db.session.add(new_user)
         db.session.commit()
-        flash('Registration successful!')
-        msg = Message("Welcome to SteamScout!", # apprently the header
-                sender="steam.scout.15@gmail.com",
-                recipients=[form.email.data])
-        msg.body = """Hello, welcome to SteamScout. You're just about ready
-                    to start tracking all of your favorite games! Your login information
-                    is:
-                        Username: {}
-                        Email: {}
-                        Password: {}
-                    """.format(form.username.data, form.email.data, form.password.data)
-      #  mail.send(msg)
+        flash('We sent you an email to activate your account!')
+        
+        token = generate_email_token(form.email.data)
+        confirmation_url = url_for('.confirm_user', token=token, _external=True) # external adds full absolute url path
+        html = render_template("email/email_confirmation.html", confirmation_url=confirmation_url)
+        subject = "Confirm your email"
+        send_mail(new_user.email, subject, html)
+        # moved messages into parts/
+        
+        # Should we just auto login the user here instead of a redirect?
         return redirect(url_for('login'))
     else:                                                   
         return render_template('signup.html', form=form)
+        
+@app.route('/confirm/<token>')
+def confirm_user(token):
+    try:
+        email = confirm_email_token(token)
+    except:
+        flash('The confirmation link is invalid or has expired.', 'danger')
+    current_user = User.query.filter_by(email=email).first_or_404()
+    if current_user.validated:
+        flash('Your account has already been validated!', 'info')
+    else:
+        current_user.validated = True
+        current_user.validated_on = datetime.datetime.now()
+        db.session.add(current_user)
+        db.session.commit()
+        flash('You have confirmed your account', 'success')
+    return redirect(url_for('login'))

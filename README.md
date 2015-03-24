@@ -10,6 +10,9 @@ when a game that you're interested in drops down to the price you set.
 
 ### Required
 
++ Implement Flask blueprints
++ Set up email validations
++ Set up email notifications
 + Update button in user's settings page.
 + Paginate games library, currently causes significant lag. SQL alchemy has something built in for pagination
 + configure a way for steamscout to email users. - Flask-Mail

@@ -37,18 +37,7 @@ def percent_to_price(percent, initial_price):
 
 def format_price(price):
     """Formats price by inserting a decimal point in the appropriate place."""
-    # listify = list(str(price))
-    # if price < 100: #.99 cents represented as 99
-    #     listify.insert(0, '.')
-    #     return float("".join(listify))
-    # else:
-    #     listify.insert(-2,'.')
-    #     return float("".join(listify))
-    
     return "${:.2f}".format(float(price)/100.0) 
-    # For examaple 99 returns as $0.99 and
-    # 199 returns as $1.99.
-    # May take off "$" since currency type changes
     
 #http://api.steampowered.com/ISteamApps/GetAppList/v0001
 

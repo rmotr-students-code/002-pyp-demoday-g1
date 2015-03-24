@@ -1,11 +1,12 @@
-from SteamScout import app, db, login_manager, mail
+from SteamScout import app, db, login_manager, mail, flask_bcrypt
 from forms import LoginForm, SignUpForm, AmountPref, PercentPref, GamesSearch
 from flask import (
     Flask, request, render_template, redirect, 
     session, json, g, flash, url_for
     )
 from models import Games, Preferences, User
-from helpers import percent_to_price, format_price, get_price_info, generate_email_token, confirm_email_token, send_mail
+from helpers import (percent_to_price, format_price, get_price_info, generate_email_token, 
+                    confirm_email_token, send_mail)
 from flask.ext.login import (
     LoginManager, UserMixin, login_user, logout_user, login_required
     )
@@ -112,16 +113,16 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None:
-            # flash message
+            flash("User not found", "danger")
             return render_template('login.html', form=form)
-        if user.password != form.password.data:
+        if flask_bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user)   
+            session['logged_in'] = True
+            session['username'] = user.username
+            session['user_id'] = user.id
+            return redirect(url_for('home'))
+        else:
             return render_template('login.html', form=form)
-        login_user(user)   
-        session['logged_in'] = True
-        session['username'] = user.username
-        session['user_id'] = user.id
-        #session['preferences'] = Preferences.query.filter_by(user_id=user.id)
-        return redirect(url_for('home'))
     else:
         return render_template('login.html', form=form)
 

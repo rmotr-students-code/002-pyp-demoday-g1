@@ -1,6 +1,6 @@
 from flask.ext.login import UserMixin
-from .import app, db 
-import bcrypt 
+from .import app, db, flask_bcrypt
+
 # UserMixin contains the properties andmethods required by flask-login 
 # for our user object
 class User(db.Model, UserMixin): 
@@ -18,7 +18,7 @@ class User(db.Model, UserMixin):
     def __init__(self,username, email, password, validated=False, validated_on=None):
         self.username = username
         self.email = email
-        self.password = password
+        self.password = flask_bcrypt.generate_password_hash(password)
         self.validated = validated
         self.validated_on = validated_on
         

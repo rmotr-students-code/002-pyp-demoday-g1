@@ -3,6 +3,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask.ext.login import LoginManager, login_user, logout_user, login_required
 from flask.ext.mail import Mail
+from flask.ext.bcrypt import Bcrypt
+
 
 
 app = Flask(__name__)
@@ -10,6 +12,7 @@ app = Flask(__name__)
 app.config.from_object('config')        #specify your own database root
 db = SQLAlchemy(app)
 Bootstrap(app)
+flask_bcrypt = Bcrypt(app)
 
 mail = Mail()
 mail.init_app(app)

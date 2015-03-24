@@ -5,7 +5,6 @@ import requests as r
 import json
 from SteamScout import mail
 from flask.ext.mail import Message
-#def refresh_games_table(app):
 
 #Refresh the Games table (1 minute run time)
 def reset_game_db():

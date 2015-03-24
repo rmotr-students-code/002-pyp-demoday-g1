@@ -3,9 +3,9 @@
 
 {% block content %}
 <div class="container-fluid">
-	<div class="jumbotron" style="background: url('{{ header_image }}') no-repeat center center;">
-	</div>
+	<div class="jumbotron" style="background: url('{{ header_image }}') no-repeat center center;"></div>
 	<div class="well col-md-6 col-md-offset-3 text-center">
+		
 		{% if initial_price %}
 
 			<h1> {{ game_title }} </h1>
@@ -25,16 +25,26 @@
 					{{ amount_form.threshold_amount(placeholder="19.99", class="form-control input-lg text-center") }}<br>
 					<p class="help-block">{{ amount_form.threshold_amount.errors[0] }}</p>
 					</div>
-					<button type="submit" class="btn form-control btn-success">Submit</button>
+					{% if preference %}
+						<button type="submit" class="btn form-control btn-success">Update</button><br>
+						<p><b>Current Scout price:</b> <span style="color: green;">$ {{ preference.threshold_amount }} </span></p>
+					{% else %}
+						<button type="submit" class="btn form-control btn-success">Submit</button>
+					{% endif %}
 				</form>
+			
+			<!--Breaks here?-->
 			{% else %}
-			<p><a href="{{ url_for('login')}}">Login</a> to monitor this game!</p>
+				<p>
+					<a href="{{ url_for('login') }}">Login</a> to monitor this game!
+				</p>
 			{% endif %}
+			
 		{% else %}
-		<p>Sorry. The item you've selected is either not a game at all, a demo, or
-		never had a price to begin with!<br>
-		Try picking another <a href="{{ url_for('games') }}">game!</a>
-		</p>
+			<p>Sorry. The item you've selected is either not a game at all, a demo, or
+			never had a price to begin with!<br>
+			Try picking another <a href="{{ url_for('games') }}">game!</a>
+			</p>
 		{% endif %}		
 	</div>
 </div>

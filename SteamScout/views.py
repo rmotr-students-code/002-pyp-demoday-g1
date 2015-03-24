@@ -49,8 +49,12 @@ def game_name(game_name):
     title = game_name
     game = Games.query.filter_by(game_name=game_name).first()
     id_num=game.game_id
-    amount_form = AmountPref() 
-
+    amount_form = AmountPref()
+    if 'user_id' in session.keys():
+        preference = Preferences.query.filter_by(game_name=game_name, user_id=session['user_id']).first()
+    else:
+        preference = None
+        
     price_info = get_price_info(id_num)
     if price_info != None:
         current_price = format_price(price_info['current_price'])
@@ -60,7 +64,7 @@ def game_name(game_name):
     else:
         current_price, initial_price, discount, header_image = None, None, None, None
     if amount_form.validate_on_submit():
-        if Preferences.query.filter_by(game_name=game_name, user_id=session['user_id']).first():
+        if preference:
             old_preference = Preferences.query.filter_by(game_name=game_name).first()
             db.session.delete(old_preference)
             db.session.commit()
@@ -79,7 +83,8 @@ def game_name(game_name):
                                              game_title=title,
                                              id_num=id_num,
                                              header_image=header_image,
-                                             amount_form=amount_form)
+                                             amount_form=amount_form,
+                                             preference=preference)
 
 @app.route('/developers')
 def show_developors():
@@ -100,6 +105,14 @@ def settings():
     preferences_count = Preferences.query.filter_by(user_id=session['user_id']).count()
     return render_template('settings.html', pref_data=pref_data,
                                             preferences_count=preferences_count)
+
+@login_required
+@app.route('/delete', methods=['POST'])
+def delete():
+    preference = Preferences.query.filter_by(user_id=session['user_id'], game_name=request.form['delete']).first()
+    db.session.delete(preference)
+    db.session.commit()
+    return redirect(url_for('settings'))
 
 # Log in / Log out
 @app.route('/login', methods=['GET', 'POST'])
@@ -149,7 +162,7 @@ def signup():
                         Email: {}
                         Password: {}
                     """.format(form.username.data, form.email.data, form.password.data)
-        mail.send(msg)
+      #  mail.send(msg)
         return redirect(url_for('login'))
     else:                                                   
         return render_template('signup.html', form=form)

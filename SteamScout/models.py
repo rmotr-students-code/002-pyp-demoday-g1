@@ -11,11 +11,15 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(10))
     registered_on = db.Column(db.DateTime)
-
-    def __init__(self,username, email, password):
+    validated = db.Column(db.Boolean, default=False)
+    validated_on = db.Column(db.DateTime)
+    
+    def __init__(self,username, email, password, validated=False, validated_on=None):
         self.username = username
         self.email = email
         self.password = password
+        self.validated = validated
+        self.validated_on = validated_on
         
     def __repr__(self):
         return '<ID: {} name: {}>'.format(self.id,self.username)
@@ -58,4 +62,3 @@ class Games(db.Model):
         return 'Game:{} -- Game ID{}'.format(self.game_name, self.game_id)
  
 ### Uncomment to create DB ####        
-db.create_all()

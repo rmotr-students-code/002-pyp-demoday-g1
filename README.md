@@ -27,6 +27,9 @@ when a game that you're interested in drops down to the price you set.
 + Change generic variables to be more specific. Ex. form should should be login_form
 + Add to the settings page when no preferences are set. 
 + Add a default currency on games page
++ Add button/link to the settings page which link to gamesearch ''Add New Scout''
++ Convert game games to links to games steam store page. (available in the API)
+
 
 ### Completed:
 - format price data. Currently "$4.99" displays as "499" - changed format_prices to make it easier

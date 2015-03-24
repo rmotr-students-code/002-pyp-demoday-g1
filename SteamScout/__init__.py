@@ -1,3 +1,4 @@
+"""Initializes SteamScout with SQLAlchemy, Bcrypt, Bootstrap, Flask-Mail and LoginManager"""
 from flask import Flask, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
@@ -17,7 +18,6 @@ flask_bcrypt = Bcrypt(app)
 mail = Mail()
 mail.init_app(app)
 
-# Are these two functions redundant? 
 login_manager = LoginManager()
 login_manager.init_app(app)
 

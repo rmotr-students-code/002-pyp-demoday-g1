@@ -39,6 +39,7 @@ def games():
 def game_name(game_name):
     title = game_name
     game = Games.query.filter_by(game_name=game_name).first()
+
     id_num = game.game_id
     amount_form = AmountPref()
     if 'user_id' in session.keys():
@@ -97,6 +98,14 @@ def settings():
 def delete():
     preference = Preferences.query.filter_by(
         user_id=session['user_id'], game_name=request.form['delete']).first()
+    db.session.delete(preference)
+    db.session.commit()
+    return redirect(url_for('settings'))
+
+@login_required
+@app.route('/delete', methods=['POST'])
+def delete():
+    preference = Preferences.query.filter_by(user_id=session['user_id'], game_name=request.form['delete']).first()
     db.session.delete(preference)
     db.session.commit()
     return redirect(url_for('settings'))
@@ -166,4 +175,3 @@ def confirm_user(token):
         db.session.commit()
         flash('You have confirmed your account', 'success')
     return redirect(url_for('login'))
-    

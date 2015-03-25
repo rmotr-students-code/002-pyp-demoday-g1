@@ -1,18 +1,20 @@
 {% extends "base.html" %}
 {% block title %}Settings{% endblock %}
+{% block extra_styles %}
+<style> 
+.settings_games {
+  padding-bottom: 60px;
+}
+</style>
+{% endblock %}
 {% block content %}
-
-<div>
-  <div>
+<div class="container settings_games">
     {% if current_user.is_authenticated() %}
       {% if preferences_count == 0 %}
-      <div class="container">
         <h2>Your saved alerts and preferences will go here!</h2>
         <h3>Go search for games and set a scout!</h3>
         <p>Add a redirect button to search bar here...</p>
-      </div>
       {% else %}
-      <div class="container">
         <h1>Your Current Scouts</h1>
           <div class="panel panel-default">
           {% for row in pref_data %}
@@ -32,19 +34,13 @@
               </div><!-- end of delete -->
               <div id="Update">
                 <a href="/games/{{ row.game_name }}" class="btn pull-right btn-success">Update</a>   
-              <!--    <p> {{ row.game_name }} </p>    -->   
               </div><!--end of update -->
-
             </div>
-        
           {% endfor %}
         </div>
-      </div>
       {% endif %}
     {% else %}
     <p>You have not signed in</p> 
     {% endif %}
-  </div>
 </div>
-
 {% endblock %}

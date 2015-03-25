@@ -10,7 +10,7 @@ from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
 
-app.config.from_object('config')        #specify your own database root
+app.config.from_object('config')
 db = SQLAlchemy(app)
 Bootstrap(app)
 flask_bcrypt = Bcrypt(app)

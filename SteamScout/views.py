@@ -89,7 +89,7 @@ def contact():
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     pref_data = Preferences.query.filter_by(user_id=session['user_id'])
-    preferences_count = Preferences.query.filter_by(user_id=session['user_id']).count()
+    preferences_count = pref_data.count()
     return render_template(
         'settings.html', pref_data=pref_data, preferences_count=preferences_count)
 
@@ -98,14 +98,6 @@ def settings():
 def delete():
     preference = Preferences.query.filter_by(
         user_id=session['user_id'], game_name=request.form['delete']).first()
-    db.session.delete(preference)
-    db.session.commit()
-    return redirect(url_for('settings'))
-
-@login_required
-@app.route('/delete', methods=['POST'])
-def delete():
-    preference = Preferences.query.filter_by(user_id=session['user_id'], game_name=request.form['delete']).first()
     db.session.delete(preference)
     db.session.commit()
     return redirect(url_for('settings'))

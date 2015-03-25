@@ -1,1 +1,5 @@
-<!--Email template for an alert will go here-->
+<p>Report</p>
+
+{% for alert in game_alerts %}
+<p>{{ alert[0] }} has recently hit {{ alert[1] }}</p>
+{% endfor %}

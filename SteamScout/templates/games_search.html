@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}Search Results{% endblock %}
-
+{% block extra_styles %}
+<style> 
+.search_results {
+  padding-bottom: 60px;
+}
+</style>
+{% endblock %}
 {% block content %}
 
-<div class='container'>
+<div class='container search_results'>
   {% if game_search_form.errors %}   <!-- shows us whatever errors are happening -->
-  <div class="row"><div class="alert alert-danger" role="alert">{{game_search_form.errors}}</div></div>
+    <div class="row">
+      <div class="alert alert-danger" role="alert">{{game_search_form.errors}}</div>
+    </div>
   {% endif %}
   <div class='row'>
     <div class="col-md-6 col-md-offset-3">
-      
       <form action="{{ url_for('games') }}" method="POST">
         {{ game_search_form.hidden_tag() }}
         <div class="form-group {% if game_search_form.search_term.errors %} has-error {% endif %}">
@@ -17,25 +24,26 @@
            <p class="help-block">{{ game_search_form.search_term.errors[0] }}</p>
         </div>
         <button type="submit" class="btn form-control btn-success">Search!</button>
-      </form><br>
-    <u><h1>Search Results</h1></u><br>  
-    {% if found_count == 0 %}
-      <h1>No games were found!</h1>
-    {% else %}
-      <p>Your search returned {{ found_count }} results</p>
-          <div class="panel panel-default">
-          {% for game_found in games_found %}
-            <div class="panel-heading">
-              <h3 class="panel-title"><a href="/games/{{ game_found.game_name }}">{{ game_found.game_name }}</h3>
+      </form>
+      
+      <u><h1>Search Results</h1></u>  
+      {% if found_count == 0 %}
+        <h1>No games were found!</h1>
+      {% else %}
+        <p>Your search returned {{ found_count }} result(s)</p>
+            <div class="panel panel-default">
+            {% for game_found in games_found %}
+              <div class="panel-heading">
+                <h3 class="panel-title"><a href="/games/{{ game_found.game_name }}">{{ game_found.game_name }}</a></h3>
+              </div>
+              <div class="panel-body">
+                <p>Game ID: {{ game_found.game_id }}</p>
+              </div>
+            {% endfor %}
             </div>
-            <div class="panel-body">
-              <p>Game ID: {{ game_found.game_id }}</p>
-            </div>
-        {% endfor %}
-          </div>
-    {% endif %}
-</div>
-</div>
+      {% endif %}
+    </div>
+  </div>
 <!--Temporarily moved it all to parts/all_games.html to speed up the page until pagination is made.-->
 </div>
 {% endblock %}

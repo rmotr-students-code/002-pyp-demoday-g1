@@ -14,6 +14,7 @@
     <!--<link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='custom.css') }}">-->
     {%- endblock styles %}
     {% block extra_styles %}
+
     {% endblock extra_styles %}
     {%- endblock head %}
   </head>
@@ -46,25 +47,22 @@
         </div>
       </div>
     </nav>
-    <div>
+
     {% block content -%}
     <!--This is where each page will go-->
     {%- endblock content %}
-    </div>
 
-    <div>
-    <nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="navbar navbar-default navbar-fixed-bottom">
       <div class="container-fluid">
         <div>
           <ul class="nav navbar-nav">
-            <!--Still need to make the pages for these-->
             <li><a href="/developers">Developers</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
       </div>
-    </nav>
     </div>
+
     {%- endblock navbar %}
     
 

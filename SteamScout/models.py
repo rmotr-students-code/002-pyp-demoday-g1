@@ -1,3 +1,4 @@
+"""Contains the User, Games, and Preferences models to use with SQLAlchemy"""
 from flask.ext.login import UserMixin
 from .import db, flask_bcrypt
 

@@ -1,12 +1,16 @@
 # Stand alone file to test aspects of the website.
 #from apscheduler.scheduler import Scheduler
-from SteamScout import app, db, models, Games, User, Preferences
-
+from SteamScout import app, db, models, Games, User, Preferences, helpers, views
+from crontab import CronTab
 import requests as r
 import json
 from SteamScout import mail
 from flask.ext.mail import Message
+import os
 
+
+
+_basedir = os.path.abspath(os.path.dirname(__file__))
 #Refresh the Games table (1 minute run time)
 def reset_game_db():
     
@@ -24,9 +28,19 @@ def reset_db():
     db.drop_all()
     db.create_all()
 
+
+
+
 if __name__ == '__main__':       
-    reset_db()
-    reset_game_db()
+    helpers.send_game_alert(1)
+    #reset_db()
+    #reset_game_db()
+
+
+    
+    
+
+
 
 """
 def game_db_reset():

@@ -1,11 +1,26 @@
 {% extends 'base.html' %}
 {% block title %}Developers{% endblock %}
 
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='developers.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class='container'>
+    <!--<div class='profile'>-->
+    <!--    <img src="http://lorempixel.com/400/200/" class='img-rounded'>-->
+    <!--</div>-->
+    <!--<div class='profile'>-->
+    <!--    <img src="http://lorempixel.com/400/200/" class='img-rounded'>-->
+    <!--</div>-->
+    <!--<div class='profile'>-->
+    <!--    <img src="http://lorempixel.com/400/200/" class='img-rounded'>-->
+    <!--</div>-->
 <h1>Men or Gods? Many have asked this question in regards to the site's 
 creators: Martin, Charlie and Alan. Consensus leans to the latter, 
 but who can say for sure.</h1>
+
+
 <img src="http://gm-cdn.gamezebo.netdna-cdn.com/wp-content/uploads/2015/03/house-of-cards.jpg" style="width:100%">
 </div>
 {% endblock %}

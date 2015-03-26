@@ -18,6 +18,7 @@ when a game that you're interested in drops down to the price you set.
 
 ### Optional
 
++ Make it mobile friendly, add media-queries
 + Improve Settings page. - Improved it to look better.
 + Add percentage threshold option for preferences
 + Change Preferences so that once an email goes out with that preference, 

@@ -1,0 +1,9 @@
+.profile {
+    float: left; 
+    width: 30%; 
+    margin-bottom: 0.5em;
+}
+
+.navbar {
+    background-color: black;
+}

@@ -7,14 +7,16 @@
     <title>{% block title %}{% endblock title %} | SteamScout</title>
     {%- block styles %}
     <!-- Bootstrap -->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <!--<link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap.min.css') }}">-->
     <!--A custom css file in static that you can use to change default bootstrap features-->
     <!--<link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='custom.css') }}">-->
     {%- endblock styles %}
+    
     {% block extra_styles %}
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base_fixes.css') }}">
     {% endblock extra_styles %}
+    
     {%- endblock head %}
   </head>
   
@@ -23,7 +25,7 @@
     {% block navbar %}
     
     <body class = "body">
-    <nav class="navbar navbar-default" role="navigation">
+    <div class="navbar navbar-default nav-top" role="navigation">
       <div class="container-fluid">
         
         <div class="navbar-header">
@@ -44,20 +46,21 @@
           {% endif %}
           </ul>
         </div>
-      </div>
-    </nav>
+    </div>
     <!--Flash-->
-      {% with messages = get_flashed_messages(with_categories=True) %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
       {% if messages %}
         {% for category, message in messages %}
-        <div class="text-center alert-{{ category }}">
-          <h3>{{ message }}</h3>
-        </div>
+          <div class="text-center alert-dismissable alert-{{ category }}">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4>{{ message }}</h4>
+          </div>
         {% endfor %}
       {% endif %}
     {% endwith %}
     <!--End Flash-->
-    
     {% block content -%}
     <!--This is where each page will go-->
     {%- endblock content %}
@@ -76,16 +79,17 @@
     {%- endblock navbar %}
     
 
-    {% block scripts %}
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    {%- endblock scripts %}
-    {% block extra_scripts %}
-    <!--EXTRA JS HERE-->
-    {% endblock extra_scripts %}
+
     {%- endblock body %}
   </body>
+  {% block scripts %}
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  {%- endblock scripts %}
+  {% block extra_scripts %}
+  <!--EXTRA JS HERE-->
+  {% endblock extra_scripts %}
 {%- endblock html %}
 </html>
 {% endblock doc -%}

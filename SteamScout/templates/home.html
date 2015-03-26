@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css') }}">
+{% endblock %}
+
 {% block content %}
+<div class="background">
 <div class="jumbotron">
-  <div class="container">
+  <div class="container jumbotron-text">
     {% if current_user.is_authenticated() %}
     <h1>Welcome {{ current_user.username }}!</h1>
     {% else %}
@@ -31,6 +36,8 @@
     <a class="btn btn-default btn-lg" href="/signup" role="button">Sign Up</a>
   </div>
   {% endif %}
+
+</div>
 
 </div>
 {% endblock %}

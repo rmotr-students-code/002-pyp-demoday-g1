@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}{{ game_title }}{% endblock %}
 
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='game_page.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
 	<div class="jumbotron" style="background: url('{{ header_image }}') no-repeat center center;"></div>
-	<div class="well col-md-6 col-md-offset-3 text-center">
+	<div class="well col-md-6 col-md-offset-3 text-center game-details">
 		
 		{% if initial_price %}
 

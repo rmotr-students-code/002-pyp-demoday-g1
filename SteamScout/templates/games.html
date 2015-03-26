@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
 {% block title %}Game Library{% endblock %}
 
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='games.css') }}">
+{% endblock %}
+
 {% block content %}
-<div class='container'>
+<div class="background">
+<div class='container search-form'>
   {% if game_search_form.errors %}   <!-- shows us whatever errors are happening -->
-  <div class="row"><div class="alert alert-danger" role="alert">{{game_search_form.errors}}</div></div>
+    <div class="row">
+      <div class="alert alert-danger" role="alert">{{game_search_form.errors}}</div>
+    </div>
   {% endif %}
   <div class='row'>
     <div class="col-md-6 col-md-offset-3">
@@ -21,6 +28,6 @@
     </div>
   </div>
 </div>
-
+</div>
 <!--Temporarily moved it all to parts/all_games.html to speed up the page until pagination is made.-->
 {% endblock %}

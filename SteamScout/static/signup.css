@@ -1,3 +1,21 @@
 .help-block {
 	color: red;
 }
+
+.navbar {
+    margin-bottom: 0;
+}
+
+.background {
+    height: 90vh;
+    background: url('http://www.hdwallpapersos.com/wp-content/uploads/2014/11/10954-the-elder-scrolls-v-skyrim-1920x1080-game-wallpaper.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.container {
+    padding-top: 50px;
+    color: white;
+}

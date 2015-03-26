@@ -1,0 +1,29 @@
+.background {
+    height: 90vh;
+    background: url('http://th04.deviantart.net/fs70/PRE/f/2012/223/c/8/tf2_scout_minimalist_wallpaper_by_bohitargep-d5aoh8c.jpg') no-repeat center bottom fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.navbar, .jumbotron {
+    margin-bottom: 0;
+}
+
+.jumbotron {
+    opacity: 0.5;
+}
+
+.jumbotron-text {
+    color: black;
+}
+
+.btn-group {
+    opacity: 0.8;
+    padding-top: 20px;
+}
+
+.btn-group:hover {
+    opacity: 1.0;
+}

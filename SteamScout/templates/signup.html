@@ -8,11 +8,12 @@
 {% endblock extra_styles %}
 
 {% block content %}
+<div class='background'>
 <div class='container'>
   {% if form.errors %}   <!-- shows us whatever errors are happening -->
   <div class="row"><div class="alert alert-danger" role="alert">{{form.errors}}</div></div>
   {% endif %}
-  <div class='row'>
+  <div class='row text-center'>
     <div class="col-md-6 col-md-offset-3">
       
       <form action="{{ url_for('signup') }}" method="post">
@@ -56,5 +57,5 @@
     </div> <!-- end of col-md-6 col-md-offset-3 -->
   </div> <!-- end of row -->
 </div> <!--end of container -->
-
+</div>
 {% endblock content %}

@@ -1,22 +1,20 @@
 {% extends 'base.html' %}
 {% block title %}Search Results{% endblock %}
-{% block extra_styles %}
-<style> 
-.search_results {
-  padding-bottom: 60px;
-}
-</style>
-{% endblock %}
-{% block content %}
 
-<div class='container search_results'>
+{% block extra_styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='games_search.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="background">
+<div class='container search-results'>
   {% if game_search_form.errors %}   <!-- shows us whatever errors are happening -->
     <div class="row">
       <div class="alert alert-danger" role="alert">{{game_search_form.errors}}</div>
     </div>
   {% endif %}
   <div class='row'>
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-6 col-md-offset-3 search-bar">
       <form action="{{ url_for('games') }}" method="POST">
         {{ game_search_form.hidden_tag() }}
         <div class="form-group {% if game_search_form.search_term.errors %} has-error {% endif %}">
@@ -45,5 +43,6 @@
     </div>
   </div>
 <!--Temporarily moved it all to parts/all_games.html to speed up the page until pagination is made.-->
+</div>
 </div>
 {% endblock %}

@@ -1,3 +1,7 @@
 #!/usr/bin/python
 import os
-os.system("ping " + "www.google.com" + " -c 1")
+result = "WORKING"
+
+test = open("test.txt", 'w') 
+test.write(result)
+test.close()

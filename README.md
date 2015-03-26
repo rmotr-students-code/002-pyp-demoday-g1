@@ -10,18 +10,16 @@ when a game that you're interested in drops down to the price you set.
 
 ### Required
 
-+ Set up email notifications
++ Set up email notifications and integrate with some type of scheduling system. 
 + Paginate games library, currently causes significant lag. SQL alchemy has something built in for pagination
-+ configure a way for steamscout to email users. - Flask-Mail
 + set up the gamesDB to automatically refresh every 24 hours. - Cron Job
-+ set the price monitoring for users to refresh price data every x hours. 
-+ Add percentage threshold option for preferences
-+ Improve Settings page. - Improved it to look better. 
-+ Fix flashes
++ Fix flashes - Working on it right now
 
 
 ### Optional
 
++ Improve Settings page. - Improved it to look better.
++ Add percentage threshold option for preferences
 + Change Preferences so that once an email goes out with that preference, 
 either delete the preference or mark it so that it doesn't get sent out again in the next report. 
 + Color divs in preferences so that users can see how close their set price is to the current price. 
@@ -37,6 +35,7 @@ either delete the preference or mark it so that it doesn't get sent out again in
 
 
 ### Completed:
+- configure a way for steamscout to email users. - Flask-Mail
 - Update button in user's settings page.
 - set up user preferences
 - Set up email account validations

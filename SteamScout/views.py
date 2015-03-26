@@ -128,6 +128,7 @@ def logout():
     logout_user()
     session.pop('username')
     session.pop('logged_in', None)
+    flash("You have successfully logged out", "success")
     return redirect(url_for('home'))
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -137,7 +138,6 @@ def signup():
         new_user = User(form.username.data, form.email.data, form.password.data)
         db.session.add(new_user)
         db.session.commit()
-        flash('We sent you an email to activate your account!')
 
         token = generate_email_token(form.email.data)
         confirmation_url = url_for('.confirm_user', token=token, _external=True)
@@ -147,6 +147,7 @@ def signup():
         send_mail(new_user.email, subject, html)
 
         # Should we just auto login the user here instead of a redirect?
+        flash('We sent you an email to activate your account!', 'info')
         return redirect(url_for('login'))
     else:
         return render_template('signup.html', form=form)

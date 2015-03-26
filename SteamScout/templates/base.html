@@ -5,7 +5,6 @@
   <head>
     {%- block head %}
     <title>{% block title %}{% endblock title %} | SteamScout</title>
-
     {%- block styles %}
     <!-- Bootstrap -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -47,7 +46,18 @@
         </div>
       </div>
     </nav>
-
+    <!--Flash-->
+      {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+        <div class="text-center alert-{{ category }}">
+          <h3>{{ message }}</h3>
+        </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <!--End Flash-->
+    
     {% block content -%}
     <!--This is where each page will go-->
     {%- endblock content %}
@@ -72,6 +82,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     {%- endblock scripts %}
     {% block extra_scripts %}
+    <!--EXTRA JS HERE-->
     {% endblock extra_scripts %}
     {%- endblock body %}
   </body>

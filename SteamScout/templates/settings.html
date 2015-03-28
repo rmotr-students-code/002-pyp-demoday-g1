@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Settings{% endblock %}
+
 {% block extra_styles %}
-<style> 
-.settings_games {
-  padding-bottom: 60px;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='settings.css') }}">
 {% endblock %}
+
 {% block content %}
 <div class="container settings_games">
     {% if current_user.is_authenticated() %}
@@ -16,7 +14,34 @@
         <p>Add a redirect button to search bar here...</p>
       {% else %}
         <h1>Your Current Scouts</h1>
-          <div class="panel panel-default">
+        <div class="list-example">
+          <ul class="list-group list-inline row">
+            {% for row in pref_data %}
+            
+              <li class="list-group-item text-center col-md-4">
+
+                <h3><a href="/games/{{ row.game_name }}">{{ row.game_name }}</a></h3>
+                <p>Game ID: {{row.game_id }}</p>
+                <p>Scout Amount:</b> {{ "${:.2f}".format(row.threshold_amount) }}</p>
+
+                <div id="update">
+                  <a href="/games/{{ row.game_name }}" class="btn btn-success btn-block">Update</a>   
+                </div><!--end of update -->
+               
+                <div id="delete">
+                  <form action="{{ url_for('delete') }}" method="POST" name="delete">
+                    <!-- hidden value contains the name of the game we're deleting!! -->
+                    <input type=hidden value="{{ row.game_name }}"name="delete"></input>
+                    <button type="submit" class="btn btn-danger btn-block">Delete</button>
+                  </form>
+                </div><!-- end of delete -->
+           
+              </li>
+            {% endfor %}
+          </ul>          
+          </div> <!--list example end-->
+          
+    <!--    <div class="panel panel-default">
           {% for row in pref_data %}
             <div class="panel-heading">
               <h3 class="panel-title">{{ row.game_name }}</h3>
@@ -28,16 +53,16 @@
               <div id="Delete">
                 <form action="{{ url_for('delete') }}" method="POST" name="delete">
                   <!-- hidden value contains the name of the game we're deleting!! -->
-                  <input type=hidden value="{{ row.game_name }}"name="delete"></input>
+     <!--             <input type=hidden value="{{ row.game_name }}"name="delete"></input>
                   <button type="submit" class="btn pull-right btn-danger">Delete</button>
                 </form>
               </div><!-- end of delete -->
-              <div id="Update">
+       <!--       <div id="Update">
                 <a href="/games/{{ row.game_name }}" class="btn pull-right btn-success">Update</a>   
               </div><!--end of update -->
-            </div>
+      <!--      </div> 
           {% endfor %}
-        </div>
+        </div> -->
       {% endif %}
     {% else %}
     <p>You have not signed in</p> 

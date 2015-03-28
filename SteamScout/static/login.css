@@ -5,12 +5,11 @@
 .background {
     position: relative;
     height: 90vh;
-    background: url('http://www.hdwallpapers.in/walls/street_fighter_v-HD.jpg') no-repeat; 
+    background: url('http://www.hdwallpapers.in/walls/street_fighter_v-HD.jpg') no-repeat center center; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    z-index: -2;
 }
 
 

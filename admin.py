@@ -10,6 +10,7 @@ import os
 
 
 
+
 _basedir = os.path.abspath(os.path.dirname(__file__))
 #Refresh the Games table (1 minute run time)
 def reset_game_db():
@@ -27,6 +28,7 @@ def reset_game_db():
 def reset_db():
     db.drop_all()
     db.create_all()
+
 
 
 

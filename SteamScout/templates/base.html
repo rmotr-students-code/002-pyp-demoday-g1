@@ -4,6 +4,7 @@
 {%- block html %}
   <head>
     {%- block head %}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='scouticon.png') }}" />
     <title>{% block title %}{% endblock title %} | SteamScout</title>
     {%- block styles %}
     <!-- Bootstrap -->
@@ -11,10 +12,12 @@
     <!--<link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap.min.css') }}">-->
     <!--A custom css file in static that you can use to change default bootstrap features-->
     <!--<link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='custom.css') }}">-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base.css') }}">
+    <link href='http://fonts.googleapis.com/css?family=Play' rel='stylesheet' type='text/css'>
     {%- endblock styles %}
     
     {% block extra_styles %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base.css') }}">
+
     {% endblock extra_styles %}
     
     {%- endblock head %}
@@ -30,7 +33,8 @@
         
         <div class="navbar-header">
           <a class="navbar-brand" href="/">
-            SteamScout
+            <img class="logo" src="{{ url_for('static', filename='steamscout.png') }}">
+            <p id="nav_title">SteamScout</p>
           </a>
         </div>        
 
@@ -38,7 +42,7 @@
           <ul class="nav navbar-nav navbar-right">
           {% if current_user.is_authenticated() %}
             <li><a href="/settings">{{ current_user.username }}</a></li>
-            <li><a href="/games">Game Library</a></li>
+            <li><a href="/games">Games</a></li>
             <li><a href="/logout">Log out</a></li>
           {% else %}
             <li><a href="/games">Game Library</a></li>

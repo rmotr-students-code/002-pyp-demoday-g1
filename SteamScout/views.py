@@ -18,10 +18,12 @@ def load_user(id):
 def home():
     return render_template('home.html')
 
-@app.route('/games', methods=['GET', 'POST'])
-def games():
-    all_games = Games.query.order_by(Games.game_name)
+@app.route('/games/', methods=['GET', 'POST']) # <int:page>
+def games(page=1):
+    
     game_search_form = GamesSearch()
+    # all_games = Games.query.order_by(Games.game_name).paginate(page, 10, False)
+
     if request.method == "POST" and game_search_form.validate():
         search_term = game_search_form.search_term.data
         games_found = Games.query.filter(Games.game_name.like("%{}%".format(search_term)))
@@ -32,8 +34,8 @@ def games():
             games_found=games_found, found_count=found_count)
     else:
         return render_template(
-            'games.html', all_games=all_games,
-            game_search_form=game_search_form)
+            'games.html', game_search_form=game_search_form)
+            # add all_games here if pagination is wanted.
 
 @app.route('/games/<game_name>', methods=['GET', 'POST'])
 def game_name(game_name):
@@ -43,10 +45,12 @@ def game_name(game_name):
     id_num = game.game_id
     amount_form = AmountPref()
     if 'user_id' in session.keys():
-        preference = Preferences.query.filter_by(
-            game_name=game_name, user_id=session['user_id']).first()
-    else:
-        preference = None
+        try:
+            preference = Preferences.query.filter_by(
+                game_name=game_name, user_id=session['user_id']).first()
+            existing_treshold = "{:.2f}".format(preference.threshold_amount)
+        except:
+            existing_treshold = None
 
     price_info = get_price_info(id_num)
     if price_info != None:
@@ -72,7 +76,7 @@ def game_name(game_name):
     return render_template(
         'game_page.html', current_price=current_price, initial_price=initial_price,
         discount=discount, game_title=title, id_num=id_num, header_image=header_image,
-        amount_form=amount_form, preference=preference)
+        amount_form=amount_form, preference=existing_treshold)
 
 @app.route('/developers')
 def show_developors():

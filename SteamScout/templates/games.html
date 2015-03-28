@@ -7,27 +7,25 @@
 
 {% block content %}
 <div class="background">
-<div class='container search-form'>
-  {% if game_search_form.errors %}   <!-- shows us whatever errors are happening -->
-    <div class="row">
-      <div class="alert alert-danger" role="alert">{{game_search_form.errors}}</div>
-    </div>
-  {% endif %}
-  <div class='row'>
-    <div class="col-md-6 col-md-offset-3">
-      
-      <form action="{{ url_for('games') }}" method="POST">
-        {{ game_search_form.hidden_tag() }}
-        <div class="form-group {% if game_search_form.search_term.errors %} has-error {% endif %}">
-           {{ game_search_form.search_term(placeholder="Search for a game", class="form-control input-lg") }} 
-           <p class="help-block">{{ game_search_form.search_term.errors[0] }}</p>
-        </div>
-        <button type="submit" class="btn form-control btn-success">Search!</button>
-      </form>
-      
+  <div class='container search-form'>
+    {% if game_search_form.errors %}   <!-- shows us whatever errors are happening -->
+      <div class="row">
+        <div class="alert alert-danger" role="alert">{{game_search_form.errors}}</div>
+      </div>
+    {% endif %}
+    <div class='row'>
+      <div class="col-md-6 col-md-offset-3">
+        
+        <form action="{{ url_for('games') }}" method="POST">
+          {{ game_search_form.hidden_tag() }}
+          <div class="form-group {% if game_search_form.search_term.errors %} has-error {% endif %}">
+             {{ game_search_form.search_term(placeholder="Eg. Payday", class="form-control input-lg text-center") }} 
+             <p class="help-block">{{ game_search_form.search_term.errors[0] }}</p>
+          </div>
+          <button type="submit" class="btn form-control btn-success">Search!</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
-</div>
-<!--Temporarily moved it all to parts/all_games.html to speed up the page until pagination is made.-->
 {% endblock %}

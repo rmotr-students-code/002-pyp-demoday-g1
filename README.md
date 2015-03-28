@@ -8,13 +8,23 @@ Charlie's angels
 Steam sales are a daily occurance but there are way too many games to keep track of. Use SteamScout to alert you
 when a game that you're interested in drops down to the price you set. 
 
+## How To Use SteamScout
+1. Sign up to make an accout
+2. Use the link sent to your email to validate your account
+3. Search for games
+4. Set a scout to email you when a game drops down to a price you set
+5. SteamScout will email you automatically if any of your games hit your preferences.
+
+- You can update/delete your set price scouts at any time.
+
 ### Required
 
 + Set up email notifications and integrate with some type of scheduling system. 
 + Paginate games library, currently causes significant lag. SQL alchemy has something built in for pagination
 + set up the gamesDB to automatically refresh every 24 hours. - Cron Job
-+ Fix flashes - Working on it right now
 
+### Bugs
++ Flashes are not dismissable 
 
 ### Optional
 
@@ -36,6 +46,7 @@ either delete the preference or mark it so that it doesn't get sent out again in
 
 
 ### Completed:
+- Flashes
 - configure a way for steamscout to email users. - Flask-Mail
 - Update button in user's settings page.
 - set up user preferences

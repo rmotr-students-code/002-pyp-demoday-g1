@@ -14,9 +14,9 @@
 
 			<h1> {{ game_title }} </h1>
 			<p>Game ID: {{ id_num }}</p>
-			<p>Current Price: {{ current_price }}</p>
-			<p>Discount Percent: {{ discount }}%</p>
 			<p>Retail Price: {{ initial_price }}</p>
+			<p>Current Discount: {{ discount }}%</p>
+			<b><p>Current Price: {{ current_price }}</p></b>
 			
 			{% if current_user.is_authenticated() %}
 			<!--Moved percent threshold form to parts/percent_threshold.html-->
@@ -31,7 +31,7 @@
 					</div>
 					{% if preference %}
 						<button type="submit" class="btn form-control btn-success">Update</button><br>
-						<p><b>Current Scout price:</b> <span style="color: green;">$ {{ preference.threshold_amount }} </span></p>
+						<p><b>Current Scout price:</b> <span style="color: green;">$ {{ preference }} </span></p>
 					{% else %}
 						<button type="submit" class="btn form-control btn-success">Submit</button>
 

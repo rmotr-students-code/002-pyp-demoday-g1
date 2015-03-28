@@ -3,9 +3,28 @@
 }
 
 .nav-top {
-    background-color: black; 
+    background-color: white; 
 }
 
 .body {
     margin-bottom: 0;
+}
+
+.navbar-header {
+    display: inline-block;
+}
+.logo {
+    height: 45px;
+    width: 45px;
+    position: relative;
+    top: -12px; 
+}
+
+#nav_title {
+    position: absolute;
+    left: 70px;
+    top: 15px;
+    color: black;
+    font-size: 140%;
+    font-family: 'Play';
 }

@@ -13,7 +13,7 @@ SECURITY_SALT = 'change_this_later_also'
 
 ### APP CONFIG ###
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(_basedir, 'steamscout.db')
+SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:steamscout@localhost/steamscout'  # os.path.join(_basedir, 'steamscout.db')
 
 ### Other Config ###
 STEAM_API_KEY = "D7BC71E91BD7E9A204C48BD83EFD29BB"
@@ -29,17 +29,3 @@ MAIL_DEBUG = False
 MAIL_USERNAME = "steam.scout.15@gmail.com"
 MAIL_PASSWORD = "steamdeals"
 DEFAULT_MAIL_SENDER = 'Admin <steam.scout.15@gmail.com>'
-
-### CELERY CONFIG ###
-CELERY_TIMEZONE = 'US/Eastern'
-
-# my understanding is that when called upon the 'beat" will run scheduler.test (see scheduler.py)
-# every minute. crontab() = " * * * * * "
-CELERYBEAT_SCHEDULE = {
-    'testing': {
-        'task': 'scheduler.test',
-        'schedule': crontab()
-    },
-}
-#CELERY_BROKER_URL='sqla+sqlite:///' + os.path.join(_basedir, 'steamscout.db')
-#CELERY_RESULT_BACKEND='sqla+sqlite:///' + os.path.join(_basedir, 'steamscout.db')

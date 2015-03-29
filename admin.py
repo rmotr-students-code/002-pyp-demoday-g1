@@ -7,12 +7,9 @@ import json
 from SteamScout import mail
 from flask.ext.mail import Message
 import os
+from sqlalchemy import create_engine
 
-
-
-
-_basedir = os.path.abspath(os.path.dirname(__file__))
-#Refresh the Games table (1 minute run time)
+# Refresh the Games table (1 minute run time)
 def reset_game_db():
     
     game_list = r.get('http://api.steampowered.com/ISteamApps/GetAppList/v0001')
@@ -34,9 +31,9 @@ def reset_db():
 
 
 if __name__ == '__main__':       
-    helpers.send_game_alert(1)
-    #reset_db()
-    #reset_game_db()
+    #helpers.send_game_alert(1)
+    reset_db()
+    reset_game_db()
 
 
     

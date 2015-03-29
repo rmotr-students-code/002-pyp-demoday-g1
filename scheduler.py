@@ -5,9 +5,12 @@ import json
 from celery import Celery
 from datetime import timedelta
 from celery.schedules import crontab
+import os
+_basedir = os.path.abspath(os.path.dirname(__file__))
 
-#note the is some stuff in the config file    
-job = Celery('scheduler')
+job = Celery(broker = 'sqla+sqlite:///' + os.path.join(_basedir, 'steamscout.sqlite'),
+    backend = 'sqla+sqlite:///' + os.path.join(_basedir, 'steamscout.sqlite')
+    )
 
 #test script, when we get celery to work, we would add the decorator to the func we want to run
 @job.task
@@ -16,8 +19,3 @@ def test():
     test = open("test.txt", 'w')  
     test.write(result)
     test.close()
-
-
-
-if __name__ == '__main__':    
-    job.worker_mail()

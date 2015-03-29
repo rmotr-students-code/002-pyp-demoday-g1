@@ -50,7 +50,9 @@ def game_name(game_name):
                 game_name=game_name, user_id=session['user_id']).first()
             existing_treshold = "{:.2f}".format(preference.threshold_amount)
         except:
-            existing_treshold = None
+            pass
+    else:    
+        existing_treshold = None
 
     price_info = get_price_info(id_num)
     if price_info != None:

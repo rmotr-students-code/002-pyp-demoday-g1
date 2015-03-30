@@ -26,7 +26,7 @@ def games(page=1):
 
     if request.method == "POST" and game_search_form.validate():
         search_term = game_search_form.search_term.data
-        games_found = Games.query.filter(Games.game_name.like("%{}%".format(search_term)))
+        games_found = Games.query.filter(Games.game_name.ilike("%{}%".format(search_term)))
         found_count = games_found.count()
         game_search_form = GamesSearch()
         return render_template(
@@ -50,7 +50,7 @@ def game_name(game_name):
                 game_name=game_name, user_id=session['user_id']).first()
             existing_treshold = "{:.2f}".format(preference.threshold_amount)
         except:
-            pass
+            existing_treshold = None
     else:    
         existing_treshold = None
 

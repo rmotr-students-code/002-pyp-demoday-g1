@@ -1,6 +1,7 @@
 """Contains the User, Games, and Preferences models to use with SQLAlchemy"""
 from flask.ext.login import UserMixin
 from .import db, flask_bcrypt
+from datetime import datetime
 
 # UserMixin contains the properties andmethods required by flask-login
 # for our user object
@@ -8,17 +9,20 @@ class User(db.Model, UserMixin):
     __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True)
-    email = db.Column(db.String(80), unique=True)
-    password = db.Column(db.String(10))
+    username = db.Column(db.String(255), unique=True)
+    email = db.Column(db.String(255), unique=True)
+    password = db.Column(db.String(255))
     registered_on = db.Column(db.DateTime)
     validated = db.Column(db.Boolean, default=False)
     validated_on = db.Column(db.DateTime)
 
-    def __init__(self, username, email, password, validated=False, validated_on=None):
+    def __init__(self, username, email, password, registered_on=None, validated=False, validated_on=None):
         self.username = username
         self.email = email
         self.password = flask_bcrypt.generate_password_hash(password)
+        if registered_on == None:
+            registered_on = datetime.now()
+        self.registered_on = registered_on
         self.validated = validated
         self.validated_on = validated_on
 

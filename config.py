@@ -13,8 +13,12 @@ SECURITY_SALT = 'change_this_later_also'
 
 ### APP CONFIG ###
 
-# SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:steamscout@localhost/steamscout'  # os.path.join(_basedir, 'steamscout.db')
-SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+# Development setting
+SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:steamdeals@localhost/steamscout_db'
+
+# Production setting
+# SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+
 ### Other Config ###
 STEAM_API_KEY = "D7BC71E91BD7E9A204C48BD83EFD29BB"
 

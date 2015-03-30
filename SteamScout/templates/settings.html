@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container settings_games">
+<div class="container settings_games text-center">
     {% if current_user.is_authenticated() %}
       {% if preferences_count == 0 %}
         <h2>Your saved alerts and preferences will go here!</h2>

@@ -10,14 +10,25 @@
 	<div class="jumbotron" style="background: url('{{ header_image }}') no-repeat center center;"></div>
 	<div class="well col-md-6 col-md-offset-3 text-center game-details">
 		
-		{% if initial_price %}
+		{% if initial_price == "$0.00" %}
 
+			<h1> {{ game_title }} </h1>
+			<p>Game ID: {{ id_num }}</p>
+			<b><p>This game is currently free!</p></b>
+			<a class='btn btn-primary' href="http://store.steampowered.com/app/{{ id_num }}/">Buy on Steam</a>
+			<h3>or</h3>
+			<a class='btn btn-primary' href="{{ url_for('games') }}">Search for another game!</a>
+			
+		{% elif initial_price %}
 			<h1> {{ game_title }} </h1>
 			<p>Game ID: {{ id_num }}</p>
 			<p>Retail Price: {{ initial_price }}</p>
 			<p>Current Discount: {{ discount }}%</p>
 			<b><p>Current Price: {{ current_price }}</p></b>
-			
+			<a class='btn btn-primary' href="http://store.steampowered.com/app/{{ id_num }}/">Buy on Steam</a>
+			<h3>or</h3>
+
+
 			{% if current_user.is_authenticated() %}
 			<!--Moved percent threshold form to parts/percent_threshold.html-->
 				<h3>Set a Scout </h3>

@@ -3,6 +3,13 @@ Charlie's angels
 [Initial Overview Sheet](https://docs.google.com/document/d/1qt_IZOc579Qe8HO5wrb--vzrk4acdOavfqp7vlH7crw/edit)  
 [Basic Wireframes](https://docs.google.com/presentation/d/1vJZhuTA-SrLgKG1RMaPhud2BZqDFzHbbWi4EKOhzvHE/edit#slide=id.p)  
 
+# 3-30-2015 Changes
+1. Changed  the reset_games_db function. There was a unicode error when resetting the games db so I added a try/except statement.
+2. Added games pages for free games instead of giving the "not a game" page. Changed get_price_info to check if the game is free.
+3. postgres is up for c9.
+4. Added a redirect button to steam for that specific game in the game pages.
+5. ".like" was changed to ".ilike" for the game search
+6. changed  the char limits for User and added the registered_on value when creating a new user.
 
 ## Purpose
 Steam sales are a daily occurance but there are way too many games to keep track of. Use SteamScout to alert you

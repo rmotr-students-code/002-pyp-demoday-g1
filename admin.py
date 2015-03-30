@@ -7,19 +7,20 @@ import json
 from SteamScout import mail
 from flask.ext.mail import Message
 import os
-from sqlalchemy import create_engine
-
 # Refresh the Games table (1 minute run time)
 def reset_game_db():
     
     game_list = r.get('http://api.steampowered.com/ISteamApps/GetAppList/v0001')
     for game in game_list.json()['applist']['apps']['app']:
-        if (int(game['appid']) % 10 == 0) and not Games.query.filter_by(game_name=game['name']).first():
-            try:
-                new_game = Games(game['appid'],game['name'])
-                db.session.add(new_game)
-            except:
-                pass
+        try:
+            if (int(game['appid']) % 10 == 0) and not Games.query.filter_by(game_name=game['name']).first():
+                try:
+                    new_game = Games(game['appid'],game['name'])
+                    db.session.add(new_game)
+                except:
+                    pass
+        except UnicodeEncodeError:
+            pass
     db.session.commit()
 
 def reset_db():

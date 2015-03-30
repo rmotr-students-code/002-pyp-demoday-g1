@@ -1,7 +1,7 @@
 # Stand alone file to test aspects of the website.
 #from apscheduler.scheduler import Scheduler
 from SteamScout import app, db, models, Games, User, Preferences, helpers, views
-from crontab import CronTab
+# from crontab import CronTab
 import requests as r
 import json
 from SteamScout import mail

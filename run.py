@@ -3,10 +3,10 @@ from SteamScout import app
 
 if __name__ == "__main__":
     # Development settings
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    # app.run(host='0.0.0.0', port=8080, debug=True)
     
     # Production settings
-    # app.run()
+    app.run()
     
     # site url: https://002-pyp-demoday-g1-chanchar.c9.io
 

@@ -1,9 +1,22 @@
 # This file will normally not be shown for any public use buut serves as an example. 
 from datetime import timedelta
 from celery.schedules import crontab
-
 import os
 _basedir = os.path.abspath(os.path.dirname(__file__))
+
+## CELERY CONFIG ##
+#REDIS
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_TASK_SERIALIZER = 'json'
+CELERYBEAT_SCHEDULE = {
+	'test_celery_every_minute': {
+		'task': 'scheduler.test_celery',
+		'schedule': crontab(),
+		'args': ()
+	},
+}
+
 ### WTF configuration ###
 WTF_CSRF_ENABLED = True   #activates CSRF prevention
                           # http://en.wikipedia.org/wiki/Cross-site_request_forgery     
@@ -11,11 +24,9 @@ WTF_CSRF_ENABLED = True   #activates CSRF prevention
 SECRET_KEY = 'change_this_later'
 SECURITY_SALT = 'change_this_later_also'
 
-### APP CONFIG ###
-
-# Development setting
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:steamdeals@localhost/steamscout_db'
-
+### SQLAlchemy configuration ###
+#local-repo dev setting:
+SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/steamscout'
 # Production setting
 # SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 

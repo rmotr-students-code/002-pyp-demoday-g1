@@ -8,6 +8,7 @@ Flask-Login==0.2.11
 Flask-Mail==0.9.1
 Flask-Script==2.0.5
 Flask-SQLAlchemy==2.0
+Flask-Testing==0.4.2
 Flask-WTF==0.11
 gunicorn==19.3.0
 itsdangerous==0.24
@@ -21,3 +22,4 @@ sqlalchemy-migrate==0.8.2
 watchdog==0.8.3
 Werkzeug==0.10.1
 WTForms==2.0.2
+redis==2.10.3

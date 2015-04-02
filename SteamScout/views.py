@@ -18,7 +18,7 @@ def load_user(id):
 def home():
     return render_template('home.html')
 
-@app.route('/games/', methods=['GET', 'POST']) # <int:page>
+@app.route('/games', methods=['GET', 'POST']) # <int:page>
 def games(page=1):
     
     game_search_form = GamesSearch()

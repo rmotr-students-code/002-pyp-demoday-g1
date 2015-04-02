@@ -11,7 +11,8 @@ from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
 
-app.config.from_object('config')
+app.config.from_object('config.DevelopmentConfig') 
+
 db = SQLAlchemy(app)
 Bootstrap(app)
 flask_bcrypt = Bcrypt(app)

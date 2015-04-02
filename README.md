@@ -3,6 +3,9 @@ Charlie's angels
 [Initial Overview Sheet](https://docs.google.com/document/d/1qt_IZOc579Qe8HO5wrb--vzrk4acdOavfqp7vlH7crw/edit)  
 [Basic Wireframes](https://docs.google.com/presentation/d/1vJZhuTA-SrLgKG1RMaPhud2BZqDFzHbbWi4EKOhzvHE/edit#slide=id.p)  
 
+# 3-31-2015
+1. Changed config so that there are now three different config options (development, testing, and production). Check out init to see how it works. 
+
 # 3-30-2015 Changes
 1. Changed  the reset_games_db function. There was a unicode error when resetting the games db so I added a try/except statement.
 2. Added games pages for free games instead of giving the "not a game" page. Changed get_price_info to check if the game is free.
@@ -32,10 +35,11 @@ when a game that you're interested in drops down to the price you set.
 
 ### Bugs
 + Flashes are not dismissable 
++ 404 screen is broken. Image not loading.
 
 ### Optional
 
-+ Make it mobile friendly, add media-queries
++ Make it mobile friendly, add media queries
 + Improve Settings page. - Improved it to look better.
 + Add percentage threshold option for preferences
 + Change Preferences so that once an email goes out with that preference, 

@@ -1,28 +1,48 @@
 .background {
     height: 90vh;
     /*background: url('http://th04.deviantart.net/fs70/PRE/f/2012/223/c/8/tf2_scout_minimalist_wallpaper_by_bohitargep-d5aoh8c.jpg') no-repeat center bottom fixed; */
-        background: url('http://unrealitymag.bcmediagroup.netdna-cdn.com/wp-content/uploads/2011/12/video-game-wallpaper14.jpg') no-repeat center bottom fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+/*background: rgb(69,72,77);  Old browsers */
+background: -moz-linear-gradient(top,  rgba(69,72,77,1) 0%, rgba(0,0,0,1) 52%, rgba(69,72,77,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,72,77,1)), color-stop(52%,rgba(0,0,0,1)), color-stop(100%,rgba(69,72,77,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 52%,rgba(69,72,77,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 52%,rgba(69,72,77,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 52%,rgba(69,72,77,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 52%,rgba(69,72,77,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#45484d',GradientType=0 ); /* IE6-9 */
+
 }
 
-.navbar, .jumbotron {
+#scout-image {
+    max-width: 40%;
+    max-height: 40%;
+
+}
+
+.navbar {
     margin-bottom: 0;
 }
 
-.jumbotron {
-    background-color:rgba(255,255,255, .3);
-    padding-top: 120px;
+.home-banner {
+    background-color: transparent;
+    opacity: 1;
+    outline-style:solid;
+    outline-width: 2px;
+    outline-color: white;
+    position: relative;
+    top: 100px;
+    width: 70%;
 }
-
-.jumbotron-text {
-    color: black;
+.banner-text {
+    color: white;
+    font-family: 'Play';
+    z-index: -1;
+    background-color: transparent;
 }
 
 .btn-group {
-    opacity: 0.8;
+    position: relative;
+    bottom: -40%;
+    opacity: .92;
     padding-top: 20px;
 }
 
@@ -33,3 +53,14 @@
 .btn:hover {
     background-color: white;
 }
+
+/*.jumbotron {
+    background-color:rgba(255,255,255, .3);
+    padding-top: 120px;
+    opacity: .01;
+}
+
+.jumbotron-text {
+    color: white;
+}
+*/

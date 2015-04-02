@@ -7,8 +7,11 @@
 
 {% block content %}
 <div class="background">
-<div class="jumbotron">
-  <div class="container jumbotron-text text-center">
+  <div id='scout-image'>
+    <img id='scout' src="{{ url_for('static', filename='scout2.png')}}">
+  </div>
+<center><div class="home-banner">
+  <div class="banner-text">
     {% if current_user.is_authenticated() %}
     <h1>Welcome {{ current_user.username }}!</h1>
     {% else %}
@@ -17,7 +20,7 @@
     {% endif %}
     <!--<img src="http://www.twinfinite.net/wp-content/uploads/2014/08/2e26a347b12d299ad600fe73d3cbf6f0.jpg">-->
   </div>
-</div>
+</div></center>
 
 <div class="btn-group btn-lg btn-group-justified" role="group">
   {% if current_user.is_authenticated() %}

@@ -10,11 +10,16 @@ BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_TASK_SERIALIZER = 'json'
 CELERYBEAT_SCHEDULE = {
-	'test_celery_every_minute': {
-		'task': 'scheduler.test_celery',
-		'schedule': crontab(),
+	'reset_game_database': {
+		'task':'scheduler.reset_game_db',
+		'schedule': crontab(minute=0, hour=2), #resets db every day at 2:00 AM
 		'args': ()
 	},
+	'send_game_alerts': {
+		'task':'scheduler.send_game_alerts',
+		'schedule': crontab(minute=0, hour=12), #sends alerts every day at noon
+		'args': ()
+	}
 }
 
 ### WTF configuration ###

@@ -23,9 +23,23 @@ class Config(object):
     MAIL_PASSWORD = "steamdeals"
     DEFAULT_MAIL_SENDER = 'Admin <steam.scout.15@gmail.com>'
     
-    ### CELERY CONFIG ###
-    # BROKER_URL=os.environ['REPLACE_URL']
-    # CELERY_RESULT_BACKEND=os.environ['REPLACE_URL']
+    ## CELERY CONFIG ##
+    #REDIS
+    BROKER_URL = 'redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+    CELERY_TASK_SERIALIZER = 'json'
+    CELERYBEAT_SCHEDULE = {
+    	'reset_game_database': {
+    		'task':'scheduler.reset_game_db',
+    		'schedule': crontab(minute=0, hour=2), #resets db every day at 2:00 AM
+    		'args': ()
+    	},
+    	'send_game_alerts': {
+    		'task':'scheduler.send_game_alerts',
+    		'schedule': crontab(minute=0, hour=12), #sends alerts every day at noon
+    		'args': ()
+    	}
+    }
     
     ### Other Config ###
     STEAM_API_KEY = "D7BC71E91BD7E9A204C48BD83EFD29BB"

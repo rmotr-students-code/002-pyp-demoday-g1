@@ -5,8 +5,6 @@ from flask_bootstrap import Bootstrap
 from flask.ext.login import LoginManager, login_user, logout_user, login_required
 from flask.ext.mail import Mail
 from flask.ext.bcrypt import Bcrypt
-# from crontab import CronTab
-
 
 
 app = Flask(__name__)

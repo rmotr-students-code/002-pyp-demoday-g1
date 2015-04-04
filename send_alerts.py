@@ -13,9 +13,10 @@ def send_game_alerts():
     for user in User.query.all():
         user_id = user.id
         user_email = user.email
+        user_validated = user.validated
         user_preferences = Preferences.query.filter_by(user_id=user_id)
 
-        if user_preferences.first():
+        if user_preferences.first() and user_validated:
             game_alerts = []
             for preference in user_preferences:
                 current_game_info = get_price_info(preference.game_id)
@@ -23,10 +24,6 @@ def send_game_alerts():
                     game_alerts.append([preference.game_name, "${:.2f}".format(preference.threshold_amount)])
             if game_alerts:
                 with app.app_context():
-                # find_template = Environment(loader=PackageLoader("SteamScout", "templates/email"))
-                # template = find_template.get_template("scout_alert.html")
-                # preferences_url = url_for('settings', _external=True)
-                # html = template.render(game_alerts=game_alerts)
                     html = render_template("email/scout_alert.html", game_alerts=game_alerts)
                     subject = "Scout Report"
                     send_mail(user_email, subject, html)

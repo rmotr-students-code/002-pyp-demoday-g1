@@ -1,29 +1,54 @@
 .background {
     height: 90vh;
-    /*background: url('http://th04.deviantart.net/fs70/PRE/f/2012/223/c/8/tf2_scout_minimalist_wallpaper_by_bohitargep-d5aoh8c.jpg') no-repeat center bottom fixed; */
-        background: url('http://unrealitymag.bcmediagroup.netdna-cdn.com/wp-content/uploads/2011/12/video-game-wallpaper14.jpg') no-repeat center bottom fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+background: rgb(247,247,247); /* Old browsers */
+background: url(http://i.imgur.com/WEoIZdt.png) no-repeat bottom left, -moz-linear-gradient(top, rgba(247,247,247,1) 1%, rgba(237,237,237,1) 6%, rgba(63,63,63,1) 64%, rgba(30,30,30,1) 81%, rgba(0,0,0,1) 97%, rgba(0,0,0,1) 100%) no-repeat; /* FF3.6+ */
+background: url(http://i.imgur.com/WEoIZdt.png) no-repeat bottom left, -webkit-gradient(linear, left top, left bottom, color-stop(1%,rgba(247,247,247,1)), color-stop(6%,rgba(237,237,237,1)), color-stop(64%,rgba(63,63,63,1)), color-stop(81%,rgba(30,30,30,1)), color-stop(97%,rgba(0,0,0,1)), color-stop(100%,rgba(0,0,0,1))) no-repeat; /* Chrome,Safari4+ */
+background: url(http://i.imgur.com/WEoIZdt.png) no-repeat bottom left, -webkit-linear-gradient(top, rgba(247,247,247,1) 1%,rgba(237,237,237,1) 6%,rgba(63,63,63,1) 64%,rgba(30,30,30,1) 81%,rgba(0,0,0,1) 97%,rgba(0,0,0,1) 100%) no-repeat; /* Chrome10+,Safari5.1+ */
+background: url(http://i.imgur.com/WEoIZdt.png) no-repeat bottom left, -o-linear-gradient(top, rgba(247,247,247,1) 1%,rgba(237,237,237,1) 6%,rgba(63,63,63,1) 64%,rgba(30,30,30,1) 81%,rgba(0,0,0,1) 97%,rgba(0,0,0,1) 100%) no-repeat; /* Opera 11.10+ */
+background: url(http://i.imgur.com/WEoIZdt.png) no-repeat bottom left, -ms-linear-gradient(top, rgba(247,247,247,1) 1%,rgba(237,237,237,1) 6%,rgba(63,63,63,1) 64%,rgba(30,30,30,1) 81%,rgba(0,0,0,1) 97%,rgba(0,0,0,1) 100%) no-repeat; /* IE10+ */
+background: url(http://i.imgur.com/WEoIZdt.png) no-repeat bottom left, linear-gradient(to bottom, rgba(247,247,247,1) 1%,rgba(237,237,237,1) 6%,rgba(63,63,63,1) 64%,rgba(30,30,30,1) 81%,rgba(0,0,0,1) 97%,rgba(0,0,0,1) 100%) no-repeat; /* W3C */
+
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+-webkit-background-size: 45%, cover;
+-moz-background-size: 45%, cover;
+-o-background-size: 45%, cover;
+background-size: 45%, cover; 
 }
 
-.navbar, .jumbotron {
+#scout-image {
+    max-width: 40%;
+    max-height: 40%;
+
+}
+
+.navbar {
     margin-bottom: 0;
+    margin-top: 0;
+
 }
 
-.jumbotron {
-    background-color:rgba(255,255,255, .3);
-    padding-top: 120px;
+.home-banner {
+    background-color: transparent;
+    opacity: 1;
+    outline-style:solid;
+    outline-width: 2px;
+    outline-color: white;
+    position: relative;
+    top: 100px;
+    width: 70%;
 }
-
-.jumbotron-text {
-    color: black;
+.banner-text {
+    color: white;
+    font-family: 'Play';
+    z-index: -1;
+    background-color: transparent;
 }
 
 .btn-group {
-    opacity: 0.8;
-    padding-top: 20px;
+    position: relative;
+    bottom: -40%;
+    opacity: .92;
+    padding-top: 65px;
 }
 
 .btn-group:hover {
@@ -33,3 +58,14 @@
 .btn:hover {
     background-color: white;
 }
+
+/*.jumbotron {
+    background-color:rgba(255,255,255, .3);
+    padding-top: 120px;
+    opacity: .01;
+}
+
+.jumbotron-text {
+    color: white;
+}
+*/

@@ -1,4 +1,4 @@
-# This file will normally not be shown for any public use buut serves as an example. 
+# This file will normally not be shown for any public use but serves as an example. 
 from datetime import timedelta
 from celery.schedules import crontab
 import os
@@ -15,8 +15,8 @@ class Config(object):
     ### MAIL CONFIG ###
     #Send Mail From : steam.scout.15@gmail.com    PW: steamdeals 
     MAIL_SERVER = 'smtp.gmail.com'
-    MAIL_PORT = 465 # 587 trying port 465
-    MAIL_USE_TLS = False #The example from the guy who uses Gmail SMPT has this set to True This being true = port number 587
+    MAIL_PORT = 465 
+    MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     MAIL_DEBUG = False
     MAIL_USERNAME = "steam.scout.15@gmail.com"
@@ -41,7 +41,6 @@ class Config(object):
     	}
     }
     
-    ### Other Config ###
     STEAM_API_KEY = "D7BC71E91BD7E9A204C48BD83EFD29BB"
     
     DEBUG = False

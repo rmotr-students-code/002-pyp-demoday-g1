@@ -14,19 +14,21 @@
     <!--<link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='custom.css') }}">-->
     {%- endblock styles %}
     {% block extra_styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='404_error.css') }}">
     {% endblock extra_styles %}
     {%- endblock head %}
   </head>
   
-  <body{% block body_attribs %}{% endblock body_attribs %}>
+  <body>
     {% block body -%}
-    
-    <div class="row text-center">
-    <img src="http://www.hercampus.com/sites/default/files/2015/03/06/76344-spongebob-square-pants-patrick-hungry.jpg">
-    <p>PAGE NOT FOUND</p>
-    <a href="javascript:history.back()" class="btn btn-lg btn-danger">Go Back</a>
+    <div class="background">
+      <div class="container vcenter">
+        <div class="text-center warning-message">
+          <h1>ERROR 404: Page Not Found</h1>
+          <a href="javascript:history.back()" class="btn btn-lg btn-danger">Go Back to the Previous Page</a>
+        </div>
+      </div>
     </div>
-    
     {% block scripts %}
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>

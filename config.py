@@ -49,13 +49,14 @@ class Config(object):
     HOST = '0.0.0.0'
 
 class ProductionConfig(Config):
-    # SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     PORT = None
     HOST = None
     
     # Celery
     BROKER_URL = os.environ.get('REDISCLOUD_URL') #global variable provided in heroku environment
     CELERY_RESULT_BACKEND = os.environ.get('REDISCLOUD_URL')
+
 
 class DevelopmentConfig(Config):
     DEBUG = True

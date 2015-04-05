@@ -7,7 +7,7 @@ if __name__ == "__main__":
 
     # site url: https://002-pyp-demoday-g1-chanchar.c9.io
 
-    # server error: Port being used ... yada yada
+    # server error: Port being used ...
     # terminal: "lsof -i :8080" looks for a process that using port 8080.
     # "kill {process number}", it's usually the first one listing using the
     # second number in the listing.

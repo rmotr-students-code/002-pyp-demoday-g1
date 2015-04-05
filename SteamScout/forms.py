@@ -11,6 +11,7 @@ class ContactForm(Form):
     header = TextField('Topic', [Required()])
     message = TextAreaField('Message', [Required()])
 
+
 class LoginForm(Form):
     username = TextField('Username', [Required()])
     password = PasswordField('Password', [Required()])

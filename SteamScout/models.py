@@ -37,12 +37,14 @@ class Preferences(db.Model):
     game_id = db.Column(db.Integer)
     game_name = db.Column(db.String, unique=False)
     threshold_amount = db.Column(db.Float)
+    notification_sent = db.Column(db.Boolean, default=False)
 
-    def __init__(self, user_id, game_id, game_name, threshold_amount):
+    def __init__(self, user_id, game_id, game_name, threshold_amount, notification_sent=False):
         self.user_id = user_id
         self.game_id = game_id
         self.game_name = game_name
         self.threshold_amount = threshold_amount
+        self.notification_sent = notification_sent
 
     def __repr__(self):
         printable = 'UserID: {} -- Game: {} -- Threshold: {}>'

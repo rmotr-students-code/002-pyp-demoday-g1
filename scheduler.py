@@ -48,9 +48,13 @@ def send_game_alerts():
         if user_preferences.first() and user_validated:
             game_alerts = []
             for preference in user_preferences:
-                current_game_info = get_price_info(preference.game_id)
-                if preference.threshold_amount >= current_game_info["current_price"]/100.0:
-                    game_alerts.append([preference.game_name, "${:.2f}".format(preference.threshold_amount)])
+                if not preference.notification_sent:
+                    current_game_info = get_price_info(preference.game_id)
+                    if preference.threshold_amount >= current_game_info["current_price"]/100.0:
+                        game_alerts.append([preference.game_name, "${:.2f}".format(preference.threshold_amount)])
+                        preference.notification_sent = True
+                        db.session.add(preference)
+                        db.session.commit()
             if game_alerts:
                 with app.app_context():
                     html = render_template("email/scout_alert.html", game_alerts=game_alerts)

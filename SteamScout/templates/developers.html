@@ -3,24 +3,42 @@
 
 {% block extra_styles %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='developers.css') }}">
+<link href='http://fonts.googleapis.com/css?family=Josefin+Slab:400,700' rel='stylesheet' type='text/css'>
 {% endblock %}
 
 {% block content %}
-<div class='container'>
-    <!--<div class='profile'>-->
-    <!--    <img src="http://lorempixel.com/400/200/" class='img-rounded'>-->
-    <!--</div>-->
-    <!--<div class='profile'>-->
-    <!--    <img src="http://lorempixel.com/400/200/" class='img-rounded'>-->
-    <!--</div>-->
-    <!--<div class='profile'>-->
-    <!--    <img src="http://lorempixel.com/400/200/" class='img-rounded'>-->
-    <!--</div>-->
-<h1>Men or Gods? Many have asked this question in regards to the site's 
-creators: Martin, Charlie and Alan. Consensus leans to the latter, 
-but who can say for sure.</h1>
+<div class="background">
+    <div class='container'>
+        <div class="row">
+          <div class="col-md-4 text-center person">
+              <img src="https://avatars0.githubusercontent.com/u/9729784?v=3&s=460" alt="Alan Johnson" class="img-thumbnail img-size">
+              <h2 class="name">Alan Johnson</h2>
+              <h5 class="location">State, Country</h5>
+              <p class="blurb">Extra Blurb Here</p>
 
-
-<img src="http://gm-cdn.gamezebo.netdna-cdn.com/wp-content/uploads/2015/03/house-of-cards.jpg" style="width:100%">
+              <a href="https://github.com/AmaxJ"><img src="{{ url_for('static', filename = 'github-icon.png') }}" class="github-icon" alt="Check out my github account!"></a>
+          </div>
+          <div class="col-md-4 text-center person">
+              <img src="https://s3-us-west-2.amazonaws.com/slack-files2/avatars/2015-02-09/3669770652_ee8c6ba5adbea0d893a5_192.jpg" alt="Martin Latrémouille" class="img-thumbnail img-size">
+              <h2 class="name">Martin Latrémouille</h2>
+              <h5 class="location">State, Country</h5>
+              <p class="blurb">Extra Blurb Here</p>
+              <a href="https://github.com/Tremule"><img src="{{ url_for('static', filename = 'github-icon.png') }}" class="github-icon" alt="Check out my github account!"></a>
+          </div>
+          <div class="col-md-4 text-center person">
+              <img src="https://avatars0.githubusercontent.com/u/8755434?v=3&s=460" alt="Charles C. Lee" class="img-thumbnail img-size">
+              <h2 class="name">Charles C. Lee</h2>
+              <h5 class="location">California, USA</h5>
+              <p class="blurb">I had the pleasure working with both Martin L. and Alan J. in creating this 
+              flask app. This experience proved to be a necessity in my journey towards a career as a developer. Lastly, 
+              I want to thank both Martin and Santi for taking time out of their lives in order to teach those willing to learn.</p>
+              <a href="https://github.com/ChanChar"><img src="{{ url_for('static', filename = 'github-icon.png') }}" class="github-icon" alt="Check out my github account!"></a>
+          </div>
+        </div>
+        <hr>
+        <h3 class="quote">&ldquo;Men or Gods? Many have asked this question in regards to the site's 
+        creators: Martin, Charlie and Alan. Consensus leans to the latter, 
+        but who can say for sure.&rdquo; - Alan J.</h3>
+    </div>
 </div>
 {% endblock %}

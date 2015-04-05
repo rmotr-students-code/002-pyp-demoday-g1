@@ -46,10 +46,10 @@ def confirm_email_token(token, expiration=86400):
     return email
 
 # Email and Messaging
-def send_mail(to, subject, template):
+def send_mail(to, subject, template, sender=app.config['DEFAULT_MAIL_SENDER']):
     new_email = Message(
         subject, recipients=[to], html=template,
-        sender=app.config['DEFAULT_MAIL_SENDER'])
+        sender=sender)
     mail.send(new_email)
 
 def percent_to_price(percent, initial_price):

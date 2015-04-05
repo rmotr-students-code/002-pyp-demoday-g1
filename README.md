@@ -29,6 +29,7 @@ when a game that you're interested in drops down to the price you set.
 
 ### Required
 
++ User must be authenticated before saving games.
 + Set up email notifications and integrate with some type of scheduling system. 
 + Paginate games library, currently causes significant lag. SQL alchemy has something built in for pagination
 + set up the gamesDB to automatically refresh every 24 hours. - Cron Job

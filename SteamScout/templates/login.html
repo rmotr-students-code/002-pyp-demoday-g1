@@ -8,7 +8,7 @@
 {% block content %}
 <div class="background">
 
-<div class="container" id="login">
+<div class="container">
 
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
@@ -30,10 +30,7 @@
            {{ form.password(class="form-control input-lg") }}
            <p class="help-block">{{ form.password.errors[0] }}</p>
         </div>
-       
-
         <button type="submit" class="btn form-control btn-success">Login</button>
-
       </form>
       <br>
       <p>Don't have an account? <a href="{{ url_for('signup') }}">Click here to sign up!</a></p>

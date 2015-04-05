@@ -2,7 +2,7 @@ from flask import (
     request, render_template, redirect,
     session, flash, url_for)
 from SteamScout import app, db, login_manager, flask_bcrypt
-from SteamScout.forms import LoginForm, SignUpForm, AmountPref, GamesSearch
+from SteamScout.forms import LoginForm, SignUpForm, AmountPref, GamesSearch, ContactForm
 from SteamScout.models import Games, Preferences, User
 from SteamScout.helpers import (
     percent_to_price, format_price, get_price_info,
@@ -63,6 +63,9 @@ def game_name(game_name):
     else:
         current_price, initial_price, discount, header_image = None, None, None, None
     if amount_form.validate_on_submit():
+        user = User.query.filter_by(id=session['user_id']).first()
+        if not user.validated:
+            flash("You will not receieve any email alerts until you activate your account.", "danger")
         if preference:
             old_preference = Preferences.query.filter_by(
                 game_name=game_name).first()
@@ -85,11 +88,19 @@ def show_developors():
     # page that shows all the games.
     return render_template('developers.html')
 
-@app.route('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    users = User.query.all()
-    preferences = Preferences.query.all()
-    return render_template('contact.html', users=users, preferences=preferences)
+    form = ContactForm()
+    if form.validate_on_submit():
+        steam_email = app.config["MAIL_USERNAME"]
+        html = render_template(
+            "email/contact.html", message=form.message.data)
+        subject = form.header.data
+        send_mail(steam_email, subject, html, form.email.data)
+        flash("Message Sent!", "success")
+        return redirect(url_for('games'))
+    else:
+        return render_template('contact.html', form=form)
 
 @login_required
 @app.route('/settings', methods=['GET', 'POST'])
@@ -113,7 +124,7 @@ def delete():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(username=form.username.data.lower()).first()
         if user is None:
             flash("User not found", "danger")
             return render_template('login.html', form=form)
@@ -135,13 +146,13 @@ def logout():
     session.pop('username')
     session.pop('logged_in', None)
     flash("You have successfully logged out", "success")
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignUpForm(request.form)
     if request.method == 'POST' and form.validate():
-        new_user = User(form.username.data, form.email.data, form.password.data)
+        new_user = User(form.username.data.lower(), form.email.data, form.password.data)
         db.session.add(new_user)
         db.session.commit()
 

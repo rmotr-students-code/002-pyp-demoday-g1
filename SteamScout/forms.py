@@ -1,7 +1,15 @@
 from flask_wtf import Form
 from wtforms.validators import Required, Length, Email, EqualTo, NumberRange
-from wtforms import (TextField, PasswordField, BooleanField, IntegerField, DecimalField)
+from wtforms import (TextField, PasswordField, BooleanField, IntegerField, DecimalField, TextAreaField)
 
+
+class ContactForm(Form):
+    email = TextField(
+            'Your Email',
+            validators=[Required("Please enter a valid email address"),
+                        Email(message=(u'That\'s not a valid email address'))])
+    header = TextField('Topic', [Required()])
+    message = TextAreaField('Message', [Required()])
 
 class LoginForm(Form):
     username = TextField('Username', [Required()])

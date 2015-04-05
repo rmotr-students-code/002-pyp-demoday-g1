@@ -1,4 +1,8 @@
-.navbar {
+* {
+    font-family: 'Play';
+}
+
+.navbar-top {
     margin-bottom: 0;
 }
 

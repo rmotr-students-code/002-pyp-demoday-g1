@@ -1,9 +1,47 @@
-.profile {
-    float: left; 
-    width: 30%; 
-    margin-bottom: 0.5em;
+
+.img-size {
+    height: 250px;
+    width: 250px;
 }
 
-/*.navbar {*/
-/*    background-color: black;*/
-/*}*/
+.container {
+    padding: 40px 0px 60px 0px;
+}
+
+.background {
+    position: relative;
+    height: 130vh;
+    background: url('https://download.unsplash.com/38/awhCbhLqRceCdjcPQUnn_IMG_0249.jpg') no-repeat center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.nav-top {
+    margin-bottom: 0px;
+}
+
+.quote, .person > p, h2, h5 {
+    background-color: rgba(256, 256, 256, 0.8);
+    padding: 10px;
+    border-radius: 3px;
+    font-family: 'Josefin Slab', serif;
+}
+
+.person > img {
+    padding: 0px;
+}
+
+.name, .location {
+    font-family: 'Josefin Slab', serif;
+    font-weight: 700;
+}
+
+.github-icon {
+    height: 80px;
+    width: 80px;
+    background-color: rgba(256, 256, 256, 0.8);
+    border-radius: 10px;
+    padding: 0;
+}

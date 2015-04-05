@@ -11,7 +11,7 @@
       {% if preferences_count == 0 %}
         <h2>Your saved alerts and preferences will go here!</h2>
         <h3>Go search for games and set a scout!</h3>
-        <p>Add a redirect button to search bar here...</p>
+        <a class='btn btn-success btn-large' href='{{ url_for('games') }}'>Search for Games</a>
       {% else %}
         <h1>Your Current Scouts</h1>
         <div class="list-example">

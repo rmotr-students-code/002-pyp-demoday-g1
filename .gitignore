@@ -56,3 +56,5 @@ docs/_build/
 target/
 
 config.py
+
+.DS_Store

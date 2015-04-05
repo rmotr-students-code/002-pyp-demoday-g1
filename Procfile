@@ -1,3 +1,3 @@
 web: gunicorn run:app
-worker: celery worker -A scheduler.app -l INFO
+worker: celery -A scheduler.celery worker -l INFO
 

@@ -52,6 +52,10 @@ class ProductionConfig(Config):
     # SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     PORT = None
     HOST = None
+    
+    # Celery
+    BROKER_URL = os.environ.get('REDISCLOUD_URL') #global variable provided in heroku environment
+    CELERY_RESULT_BACKEND = os.environ.get('REDISCLOUD_URL')
 
 class DevelopmentConfig(Config):
     DEBUG = True
@@ -59,7 +63,10 @@ class DevelopmentConfig(Config):
     # Then need to connect to it using: sudo sudo -u postgres psql
     # Quit out of the postgres bash thing using "\q" and the service should still be running the background.
     SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:steamdeals@localhost/steamscout_db'
-    
+
+class LocalDevConfig(Config):
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/steamscout'  
 
 class TestingConfig(Config):
     TESTING = True

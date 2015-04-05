@@ -32,6 +32,7 @@ def reset_game_db():
         except UnicodeEncodeError:
             pass
     db.session.commit()
+    print "reset_game_db() executed."
 
 #executes every 12 hours
 @celery.task
@@ -56,6 +57,7 @@ def send_game_alerts():
                     html = render_template("email/scout_alert.html", game_alerts=game_alerts)
                     subject = "Scout Report"
                     send_mail(user_email, subject, html)
+    print "send_game_alerts() executed."
 
 
 

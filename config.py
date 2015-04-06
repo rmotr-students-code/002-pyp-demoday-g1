@@ -21,7 +21,7 @@ class Config(object):
     MAIL_DEBUG = False
     MAIL_USERNAME = "steam.scout.15@gmail.com"
     MAIL_PASSWORD = "steamdeals"
-    DEFAULT_MAIL_SENDER = 'Admin <steam.scout.15@gmail.com>'
+    DEFAULT_MAIL_SENDER = 'SteamScout <steam.scout.15@gmail.com>'
     
     ## CELERY CONFIG ##
     #REDIS
@@ -48,12 +48,6 @@ class Config(object):
     PORT = 8080
     HOST = '0.0.0.0'
 
-class ProductionConfig(Config):
-    # SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-    PORT = None
-    HOST = None
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-
 class DevelopmentConfig(Config):
     DEBUG = True
     # Need to start the postgresql server for c9 using: "sudo service postgresql start"
@@ -61,7 +55,12 @@ class DevelopmentConfig(Config):
     # Quit out of the postgres bash thing using "\q" and the service should still be running the background.
     SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:steamdeals@localhost/steamscout_db'
     
-
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(_basedir, 'test_db.sqlite')
+
+class ProductionConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    PORT = None
+    HOST = None
+    # SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']

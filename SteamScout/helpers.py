@@ -75,20 +75,20 @@ def get_game_id(game_title):
 def get_price_info(game_id):
     game_page = r.get('http://store.steampowered.com/api/appdetails?appids={}'.format(game_id))
     game_json = game_page.json()
-    if game_json[str(game_id)]['data']['is_free']:
-        free_game = dict(
-            current_price=0,
-            initial_price=0,
-            discount_percent=0,
-            header_image=game_json[str(game_id)]['data']['header_image'])
-        return free_game
-    else:
-        try:
+    try:
+        if game_json[str(game_id)]['data']['is_free']:
+            free_game = dict(
+                current_price=0,
+                initial_price=0,
+                discount_percent=0,
+                header_image=game_json[str(game_id)]['data']['header_image'])
+            return free_game
+        else:
             price_info = dict(
                 current_price=game_json[str(game_id)]['data']['price_overview']['final'],
                 initial_price=game_json[str(game_id)]['data']['price_overview']['initial'],
                 discount_percent=game_json[str(game_id)]['data']['price_overview']['discount_percent'],
                 header_image=game_json[str(game_id)]['data']['header_image'])
             return price_info
-        except KeyError:
-            return None
+    except KeyError:
+        return None

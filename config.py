@@ -49,7 +49,7 @@ class Config(object):
     HOST = '0.0.0.0'
 
 class ProductionConfig(Config):
-   # SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     PORT = None
     HOST = None
     

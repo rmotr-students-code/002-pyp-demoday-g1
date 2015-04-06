@@ -18,9 +18,9 @@ class Config(object):
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     MAIL_DEBUG = False
-    MAIL_USERNAME = "steam.scout.15@gmail.com"
-    MAIL_PASSWORD = "steamscoutdeals"
-    DEFAULT_MAIL_SENDER = 'SteamScout <steam.scout.15@gmail.com>'
+    MAIL_USERNAME = "steamscout001@gmail.com"
+    MAIL_PASSWORD = "steamdeals"
+    DEFAULT_MAIL_SENDER = 'SteamScout <steamscout001@gmail.com>'
     
     ## CELERY CONFIG ##
     #REDIS

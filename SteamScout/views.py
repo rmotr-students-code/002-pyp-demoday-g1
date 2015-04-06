@@ -117,6 +117,7 @@ def delete():
         user_id=session['user_id'], game_name=request.form['delete']).first()
     db.session.delete(preference)
     db.session.commit()
+    flash("That scout has been dismissed.", "success")
     return redirect(url_for('settings'))
 
 # Log in / Log out

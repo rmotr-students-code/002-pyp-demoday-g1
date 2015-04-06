@@ -53,7 +53,7 @@ def send_game_alerts():
                     current_game_info = get_price_info(preference.game_id)
                     if preference.threshold_amount >= current_game_info["current_price"]/100.0:
                         game_alerts.append([preference.game_name, "${:.2f}".format(preference.threshold_amount)])
-                        preference.notification_sent = True
+                        preference.notification_sent = True #
                         db.session.add(preference)
                         db.session.commit()
             if game_alerts:

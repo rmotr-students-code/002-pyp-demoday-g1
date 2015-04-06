@@ -9,11 +9,7 @@ from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
 
-<<<<<<< HEAD
-app.config.from_object('config.LocalDevConfig') 
-=======
-app.config.from_object('config.DevelopmentConfig') 
->>>>>>> 7d6bdbd2b681ed0db83eaa8052eb74a8fd0f9952
+app.config.from_object('config.ProductionConfig') 
 
 db = SQLAlchemy(app)
 Bootstrap(app)

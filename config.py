@@ -36,7 +36,7 @@ class Config(object):
     	},
     	'send_game_alerts': {
     		'task':'scheduler.send_game_alerts',
-    		'schedule': crontab(minute=0, hour=12), #sends alerts every day at noon
+    		'schedule': crontab(), #minute=0, hour=12), #sends alerts every day at noon
     		'args': ()
     	}
     }
@@ -49,7 +49,7 @@ class Config(object):
     HOST = '0.0.0.0'
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+   # SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     PORT = None
     HOST = None
     

@@ -164,7 +164,6 @@ def signup():
         subject = "Confirm your email"
         send_mail(new_user.email, subject, html)
 
-        # Should we just auto login the user here instead of a redirect?
         flash('We sent you an email to activate your account!', 'info')
         return redirect(url_for('login'))
     else:

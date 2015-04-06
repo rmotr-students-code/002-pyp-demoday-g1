@@ -3,17 +3,6 @@ Charlie's angels
 [Initial Overview Sheet](https://docs.google.com/document/d/1qt_IZOc579Qe8HO5wrb--vzrk4acdOavfqp7vlH7crw/edit)  
 [Basic Wireframes](https://docs.google.com/presentation/d/1vJZhuTA-SrLgKG1RMaPhud2BZqDFzHbbWi4EKOhzvHE/edit#slide=id.p)  
 
-# 3-31-2015
-1. Changed config so that there are now three different config options (development, testing, and production). Check out init to see how it works. 
-
-# 3-30-2015 Changes
-1. Changed  the reset_games_db function. There was a unicode error when resetting the games db so I added a try/except statement.
-2. Added games pages for free games instead of giving the "not a game" page. Changed get_price_info to check if the game is free.
-3. postgres is up for c9.
-4. Added a redirect button to steam for that specific game in the game pages.
-5. ".like" was changed to ".ilike" for the game search
-6. changed  the char limits for User and added the registered_on value when creating a new user.
-
 ## Purpose
 Steam sales are a daily occurance but there are way too many games to keep track of. Use SteamScout to alert you
 when a game that you're interested in drops down to the price you set. 
@@ -29,35 +18,34 @@ when a game that you're interested in drops down to the price you set.
 
 ### Required
 
-+ User must be authenticated before saving games.
-+ Set up email notifications and integrate with some type of scheduling system. 
-+ Paginate games library, currently causes significant lag. SQL alchemy has something built in for pagination
-+ set up the gamesDB to automatically refresh every 24 hours. - Cron Job
-
 ### Bugs
+
 + Flashes are not dismissable 
-+ 404 screen is broken. Image not loading.
 
 ### Optional
 
++ Paginate games library, currently causes significant lag. SQL alchemy has something built in for pagination
 + Make it mobile friendly, add media queries
 + Improve Settings page. - Improved it to look better.
 + Add percentage threshold option for preferences
-+ Change Preferences so that once an email goes out with that preference, 
-either delete the preference or mark it so that it doesn't get sent out again in the next report. 
 + Color divs in preferences so that users can see how close their set price is to the current price. 
 + Implement Flask blueprints
 + validate each integer in the amount threshold form
 + make the individual games look pretty - Improved it, but it could be better..
-+ see if theres a way to include game cover art, trailers, etc in the individual game page
 + Change generic variables to be more specific. Ex. form should should be login_form
 + Add to the settings page when no preferences are set. 
 + Add a default currency on games page
 + Add button/link to the settings page which link to game search ''Add New Scout''
-+ Convert game games to links to games steam store page. (available in the API)
-
 
 ### Completed:
++ see if theres a way to include game cover art, trailers, etc in the individual game page
++ Change Preferences so that once an email goes out with that preference, 
+either delete the preference or mark it so that it doesn't get sent out again in the next report. 
++ Convert game games to links to games steam store page. (available in the API)
++ User must be authenticated before saving games.
++ Set up email notifications and integrate with some type of scheduling system. 
++ set up the gamesDB to automatically refresh every 24 hours. - Cron Job
++ 404 screen is broken. Image not loading.
 - Flashes
 - configure a way for steamscout to email users. - Flask-Mail
 - Update button in user's settings page.

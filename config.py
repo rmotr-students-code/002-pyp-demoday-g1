@@ -13,14 +13,13 @@ class Config(object):
     SECURITY_SALT = 'change_this_later_also'
     
     ### MAIL CONFIG ###
-    #Send Mail From : steam.scout.15@gmail.com    PW: steamdeals 
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 465 
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     MAIL_DEBUG = False
     MAIL_USERNAME = "steam.scout.15@gmail.com"
-    MAIL_PASSWORD = "steamdeals"
+    MAIL_PASSWORD = "steamscoutdeals"
     DEFAULT_MAIL_SENDER = 'SteamScout <steam.scout.15@gmail.com>'
     
     ## CELERY CONFIG ##

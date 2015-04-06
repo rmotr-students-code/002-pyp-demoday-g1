@@ -32,6 +32,7 @@ def reset_game_db():
         except UnicodeEncodeError:
             pass
     db.session.commit()
+    print "reset_game_db() executed."
 
 #executes every 12 hours
 @celery.task
@@ -52,7 +53,7 @@ def send_game_alerts():
                     current_game_info = get_price_info(preference.game_id)
                     if preference.threshold_amount >= current_game_info["current_price"]/100.0:
                         game_alerts.append([preference.game_name, "${:.2f}".format(preference.threshold_amount)])
-                        preference.notification_sent = True
+                        preference.notification_sent = True #
                         db.session.add(preference)
                         db.session.commit()
             if game_alerts:
@@ -60,6 +61,7 @@ def send_game_alerts():
                     html = render_template("email/scout_alert.html", game_alerts=game_alerts)
                     subject = "Scout Report"
                     send_mail(user_email, subject, html)
+    print "send_game_alerts() executed."
 
 
 

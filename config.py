@@ -36,7 +36,7 @@ class Config(object):
     	},
     	'send_game_alerts': {
     		'task':'scheduler.send_game_alerts',
-    		'schedule': crontab(minute=0, hour=12), #sends alerts every day at noon
+    		'schedule': crontab(), #minute=0, hour=12), #sends alerts every day at noon
     		'args': ()
     	}
     }
@@ -48,19 +48,31 @@ class Config(object):
     PORT = 8080
     HOST = '0.0.0.0'
 
+
+class ProductionConfig(Config):
+    try:
+        SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    except KeyError:
+        pass
+    PORT = None
+    HOST = None
+    
+    # Celery
+    BROKER_URL = os.environ.get('REDISCLOUD_URL') #global variable provided in heroku environment
+    CELERY_RESULT_BACKEND = os.environ.get('REDISCLOUD_URL')
+
+
 class DevelopmentConfig(Config):
     DEBUG = True
     # Need to start the postgresql server for c9 using: "sudo service postgresql start"
     # Then need to connect to it using: sudo sudo -u postgres psql
     # Quit out of the postgres bash thing using "\q" and the service should still be running the background.
     SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:steamdeals@localhost/steamscout_db'
-    
+
+class LocalDevConfig(Config):
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/steamscout'  
+
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(_basedir, 'test_db.sqlite')
-
-class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-    PORT = None
-    HOST = None
-    # SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']

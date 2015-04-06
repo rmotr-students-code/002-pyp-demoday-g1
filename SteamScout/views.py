@@ -96,7 +96,7 @@ def contact():
         html = render_template(
             "email/contact.html", message=form.message.data)
         subject = form.header.data
-        send_mail(steam_email, subject, html, form.email.data)
+        send_mail(steam_email, subject, html, form.email.data, sender=form.email.data)
         flash("Message Sent!", "success")
         return redirect(url_for('games'))
     else:

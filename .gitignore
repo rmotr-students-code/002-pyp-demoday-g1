@@ -59,3 +59,4 @@ config.py
 
 *.DS_Store
 *.rdb
+*.idea/

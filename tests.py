@@ -1,22 +1,42 @@
 from flask.ext.testing import TestCase
-from flask import Flask
 from SteamScout import app, db
+from SteamScout.models import User, Games, Preferences
+from admin import reset_game_db
 import unittest
-
-# Built in testing at http://flask.pocoo.org/docs/0.10/testing/
-# Check out the Flask-Testing API at the very bottom of the page for more testing options
-# https://pythonhosted.org/Flask-Testing/
+import os
 
 
 class DatabaseAndForms(TestCase):
-    
+    _basedir = os.path.abspath(os.path.dirname(__file__))
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(_basedir, 'test_db.sqlite')
+    TESTING = True
+
     def create_app(self):
         # Changes the app config to the testing settings before returning it.
-        app.config.from_object('config.TestingConfig')        
+        app.config.from_object('config.TestingConfig')
         return app
 
     def setUp(self):
         db.create_all()
+
+    def test_add_user(self):
+
+        users = User.query.filter_by(username='test_user').count()
+        self.assertEqual(users, 0)
+        user = User('test_user', 'example@sample.com', 'password')
+        db.session.add(user)
+        db.session.commit()
+        users = User.query.filter_by(username='test_user').count()
+        self.assertEqual(users, 1)
+
+    def test_add_games(self):
+
+        games_count = Games.query.count()
+        assert games_count == 0
+
+        reset_game_db()
+        games_count = Games.query.count()
+        assert games_count >= 1
 
     def tearDown(self):
         db.session.remove()
@@ -50,8 +70,6 @@ class Templates(TestCase):
         response = self.client.get("/contact")
         self.assert_template_used('contact.html')
 
-        # Settings Page
-        # self.assert_404(self.client.get("/settings"))        
         
 if __name__ == '__main__':
     unittest.main()

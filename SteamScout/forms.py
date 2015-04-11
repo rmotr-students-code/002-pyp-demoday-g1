@@ -5,9 +5,9 @@ from wtforms import (TextField, PasswordField, BooleanField, IntegerField, Decim
 
 class ContactForm(Form):
     email = TextField(
-            'Your Email',
-            validators=[Required("Please enter a valid email address"),
-                        Email(message=(u'That\'s not a valid email address'))])
+        'Your Email',
+        validators=[Required("Please enter a valid email address"),
+                    Email(message=(u'That\'s not a valid email address'))])
     header = TextField('Topic', [Required()])
     message = TextAreaField('Message', [Required()])
 

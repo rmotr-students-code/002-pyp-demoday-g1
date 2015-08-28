@@ -18,10 +18,10 @@
 
       <form action="{{ url_for('login') }}" method="POST" name="login">
         {{ form.hidden_tag() }} <!-- gets replaced with a hidden field that
-                                   implements CSRF prevention -->   
+                                   implements CSRF prevention -->
         <div class="form-group {% if form.username.errors %} has-error {% endif %}">
            <h4>{{ form.username.label }}</h4>
-           {{ form.username(size=20, class="form-control input-lg") }} 
+           {{ form.username(size=20, class="form-control input-lg") }}
            <p class="help-block">{{ form.username.errors[0] }}</p>
         </div>
 

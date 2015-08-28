@@ -8,19 +8,8 @@
 
 .background {
     height: 90vh;
-    background: rgb(247,247,247); /* Old browsers */
-    background: url(http://i.imgur.com/mHzCL64.png) no-repeat bottom right, -moz-linear-gradient(top, rgba(247,247,247,1) 1%, rgba(237,237,237,1) 6%, rgba(63,63,63,1) 64%, rgba(30,30,30,1) 81%, rgba(0,0,0,1) 97%, rgba(0,0,0,1) 100%) no-repeat; /* FF3.6+ */
-    background: url(http://i.imgur.com/mHzCL64.png) no-repeat bottom right, -webkit-gradient(linear, left top, left bottom, color-stop(1%,rgba(247,247,247,1)), color-stop(6%,rgba(237,237,237,1)), color-stop(64%,rgba(63,63,63,1)), color-stop(81%,rgba(30,30,30,1)), color-stop(97%,rgba(0,0,0,1)), color-stop(100%,rgba(0,0,0,1))) no-repeat; /* Chrome,Safari4+ */
-    background: url(http://i.imgur.com/mHzCL64.png) no-repeat bottom right, -webkit-linear-gradient(top, rgba(247,247,247,1) 1%,rgba(237,237,237,1) 6%,rgba(63,63,63,1) 64%,rgba(30,30,30,1) 81%,rgba(0,0,0,1) 97%,rgba(0,0,0,1) 100%) no-repeat; /* Chrome10+,Safari5.1+ */
-    background: url(http://i.imgur.com/mHzCL64.png) no-repeat bottom right, -o-linear-gradient(top, rgba(247,247,247,1) 1%,rgba(237,237,237,1) 6%,rgba(63,63,63,1) 64%,rgba(30,30,30,1) 81%,rgba(0,0,0,1) 97%,rgba(0,0,0,1) 100%) no-repeat; /* Opera 11.10+ */
-    background: url(http://i.imgur.com/mHzCL64.png) no-repeat bottom right, -ms-linear-gradient(top, rgba(247,247,247,1) 1%,rgba(237,237,237,1) 6%,rgba(63,63,63,1) 64%,rgba(30,30,30,1) 81%,rgba(0,0,0,1) 97%,rgba(0,0,0,1) 100%) no-repeat; /* IE10+ */
-    background: url(http://i.imgur.com/mHzCL64.png) no-repeat bottom right, linear-gradient(to bottom, rgba(247,247,247,1) 1%,rgba(237,237,237,1) 6%,rgba(63,63,63,1) 64%,rgba(30,30,30,1) 81%,rgba(0,0,0,1) 97%,rgba(0,0,0,1) 100%) no-repeat; /* W3C */
-
-   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
-   -webkit-background-size: 20%, cover;
-   -moz-background-size: 20%, cover;
-   -o-background-size: 20%, cover;
-   background-size: 20%, cover; 
+		background: url("http://res.cloudinary.com/charliecloud/image/upload/v1440729544/SteamScout/signup.jpg") grey no-repeat center center fixed;
+		background-size: cover;
 }
 
 .container {
@@ -28,30 +17,9 @@
     color: black;
 }
 
-
-/*
-.help-block {
-	color: red;
-}
-
-.navbar {
-    margin-bottom: 0;
-}
-
-.background {
-    height: 90vh;
-    background: url('http://www.hdwallpapersos.com/wp-content/uploads/2014/11/10954-the-elder-scrolls-v-skyrim-1920x1080-game-wallpaper.jpg') no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
-
-*/
-
 .signup-form {
-    background-color: rgba(256, 256, 256, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
+		color: white;
     padding: 10px;
     border-radius: 10px;
 }

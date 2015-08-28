@@ -11,17 +11,22 @@ app = Flask(__name__)
 
 app.config.from_object('config.LocalConfig')
 
+# SQLAlchemy Initialization
 db = SQLAlchemy(app)
+
+# Bootstrap Initialization
 Bootstrap(app)
+
+# Bcrypt Initialization
 flask_bcrypt = Bcrypt(app)
 
+# Mail Initialization
 mail = Mail()
 mail.init_app(app)
 
+# Login Manager Initialization
 login_manager = LoginManager()
 login_manager.init_app(app)
-
-# redirects users to the login view whenever they are required to be logged in.
 login_manager.login_view = 'login'
 
 from SteamScout.views import *

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Log In{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block extra_styles %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css') }}">
@@ -14,20 +14,20 @@
     <div class="col-md-6 col-md-offset-3">
 
   <div class="text-center login-form">
-   <h2>Sign In</h2>
+   <h2>Login</h2>
 
       <form action="{{ url_for('login') }}" method="POST" name="login">
         {{ form.hidden_tag() }} <!-- gets replaced with a hidden field that
                                    implements CSRF prevention -->
         <div class="form-group {% if form.username.errors %} has-error {% endif %}">
-           <h4>{{ form.username.label }}</h4>
-           {{ form.username(size=20, class="form-control input-lg") }}
+           <!-- <h4>{{ form.username.label }}</h4> -->
+           {{ form.username(placeholder="Username", size=20, class="form-control text-center input-lg") }}
            <p class="help-block">{{ form.username.errors[0] }}</p>
         </div>
 
         <div class="form-group {% if form.username.errors %} has-error {% endif %}">
-           <h4>{{ form.password.label }}</h4>
-           {{ form.password(class="form-control input-lg") }}
+           <!-- <h4>{{ form.password.label }}</h4> -->
+           {{ form.password(placeholder="Password", class="form-control text-center input-lg") }}
            <p class="help-block">{{ form.password.errors[0] }}</p>
         </div>
         <button type="submit" class="btn form-control btn-success">Login</button>
@@ -40,3 +40,17 @@
 </div>
 </div>
 {% endblock %}
+
+{% block extra_scripts %}
+<script>
+  $(document).ready(function() {
+    var image_url = "http://res.cloudinary.com/charliecloud/image/upload/v1440728912/SteamScout/login.jpg";
+    var img = new Image();
+    img.onload = function(){
+      $('.background').css({'background': 'url(' + image_url + ') gray 50% top', 'background-size' : 'cover'});
+      $('.background').fadeIn("slow");
+    }
+    img.src = image_url;
+  });
+</script>
+{% endblock extra_scripts %}

@@ -56,3 +56,17 @@
 </div> <!--end of container -->
 </div>
 {% endblock content %}
+
+{% block extra_scripts %}
+<script>
+  $(document).ready(function() {
+    var image_url = "http://res.cloudinary.com/charliecloud/image/upload/v1440729544/SteamScout/signup.jpg";
+    var image = new Image();
+    image.onload = function(){
+      $('.background').css({'background': 'url(' + image_url + ') gray 50% 25%', 'background-size' : 'cover'});
+      $('.background').fadeIn("slow");
+    }
+    image.src = image_url;
+  });
+</script>
+{% endblock extra_scripts %}

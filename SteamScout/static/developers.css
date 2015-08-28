@@ -9,13 +9,7 @@
 }
 
 .background {
-    position: relative;
-    height: 130vh;
-    background: url('https://download.unsplash.com/38/awhCbhLqRceCdjcPQUnn_IMG_0249.jpg') no-repeat center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    height: 100%;
 }
 
 .nav-top {
@@ -23,7 +17,7 @@
 }
 
 .quote, .person > p, h2, h5 {
-    background-color: rgba(256, 256, 256, 0.8);
+    background-color: rgba(256, 256, 256, 0.9);
     padding: 10px;
     border-radius: 3px;
     font-family: 'Josefin Slab', serif;

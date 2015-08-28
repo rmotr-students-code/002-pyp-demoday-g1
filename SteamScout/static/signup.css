@@ -6,12 +6,6 @@
     margin-bottom: 0;
 }
 
-.background {
-    height: 90vh;
-		background: url("http://res.cloudinary.com/charliecloud/image/upload/v1440729544/SteamScout/signup.jpg") grey no-repeat center center fixed;
-		background-size: cover;
-}
-
 .container {
     padding-top: 50px;
     color: black;

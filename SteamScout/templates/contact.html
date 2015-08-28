@@ -9,32 +9,43 @@
 <div class="background">
 
 		<div class='container text-center'>
-			<h1>Contact SteamScout</h1>
-			<p>We're here to answer any questions or comments.</p>
-			<hr>
 			<form class="contact-form" action="{{ url_for('contact') }}" method="POST" name="login">
-		        {{ form.hidden_tag() }} <!-- gets replaced with a hidden field that
-		                                   implements CSRF prevention -->   
-		        <div class="form-group {% if form.email.errors %} has-error {% endif %}">
-		           <h4>{{ form.email.label }}</h4>
-		           {{ form.email(size=10, class="form-control input-lg text-center", placeholder="steamscout@scout.com") }} 
-		           <p class="help-block">{{ form.email.errors[0] }}</p>
-		        </div>
-		  
-		        <div class="form-group {% if form.header.errors %} has-error {% endif %}">
-		           <h4>{{ form.header.label }}</h4>
-		           {{ form.header(size=10, class="form-control input-lg text-center", placeholder="Ex. Bug?") }} 
-		           <p class="help-block">{{ form.header.errors[0] }}</p>
-		        </div>
-		
-		        <div class="form-group {% if form.message.errors %} has-error {% endif %}">
-		           <h4>{{ form.message.label }}</h4>
-		           {{ form.message(class="form-control input-lg", placeholder="I just wanted to say...") }}
-		           <p class="help-block">{{ form.message.errors[0] }}</p>
-		        </div>
-		        <button type="submit" class="btn form-control btn-success">Submit</button>
+        {{ form.hidden_tag() }}
+				<h1>Contact SteamScout</h1>
+				<p>We're here to answer any questions or comments.</p>
+        <div class="form-group {% if form.email.errors %} has-error {% endif %}">
+           <h4>{{ form.email.label }}</h4>
+           {{ form.email(size=10, class="form-control input-lg text-center", placeholder="steamscout@scout.com") }}
+           <p class="help-block">{{ form.email.errors[0] }}</p>
+        </div>
+
+        <div class="form-group {% if form.header.errors %} has-error {% endif %}">
+           <h4>{{ form.header.label }}</h4>
+           {{ form.header(size=10, class="form-control input-lg text-center", placeholder="Ex. Bug?") }}
+           <p class="help-block">{{ form.header.errors[0] }}</p>
+        </div>
+
+        <div class="form-group {% if form.message.errors %} has-error {% endif %}">
+           <h4>{{ form.message.label }}</h4>
+           {{ form.message(class="form-control input-lg", placeholder="I just wanted to say...") }}
+           <p class="help-block">{{ form.message.errors[0] }}</p>
+        </div>
+        <button type="submit" class="btn form-control btn-success">Submit</button>
 		  </form>
 		</div>
-
 </div>
 {% endblock %}
+
+{% block extra_scripts %}
+<script>
+  $(document).ready(function() {
+    var image_url = "http://res.cloudinary.com/charliecloud/image/upload/v1440735307/SteamScout/help.jpg";
+    var img = new Image();
+    img.onload = function(){
+      $('.background').css({'background': 'url(' + image_url + ') gray 50% top', 'background-size' : 'cover'});
+      $('.background').fadeIn("slow");
+    }
+    img.src = image_url;
+  });
+</script>
+{% endblock extra_scripts %}

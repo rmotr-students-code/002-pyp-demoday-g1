@@ -4,8 +4,6 @@
 
 .background {
     height: 90vh;
-    background: url("http://res.cloudinary.com/charliecloud/image/upload/v1440728912/SteamScout/login.jpg") grey no-repeat center center fixed;
-    background-size: cover;
 }
 
 #login {

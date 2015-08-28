@@ -15,9 +15,9 @@
               <h2 class="name">Alan Johnson</h2>
               <h5 class="location">New York, USA</h5>
 
-              <p class="blurb">Working with this team to build SteamScout has been an awesome experience. 
-              To commemorate the deployment, I’ve taken it upon myself to get Martin and Charlie’s faces 
-              tattooed onto my buttocks. They’ve promised to do the same, and even though they’ve stopped 
+              <p class="blurb">Working with this team to build SteamScout has been an awesome experience.
+              To commemorate the deployment, I’ve taken it upon myself to get Martin and Charlie’s faces
+              tattooed onto my buttocks. They’ve promised to do the same, and even though they’ve stopped
               responding to my emails, I trust they’ve followed through. </p>
 
 
@@ -29,26 +29,40 @@
               <h5 class="location">Ontario, Canada</h5>
               <p class="blurb">This app was created as a final assignment for the rmotr.com advanced
                 python programming course. I had the pleasure of working with Alan and Charlie over the last
-                month where we spent several long sessions trying to solve problems and teach each other new 
+                month where we spent several long sessions trying to solve problems and teach each other new
                 concepts. I want to thank Martin Z. and Santiago for sharing their knowledge with us, we have all learned more in the
                 last few months then we ever could have on our own.</p>
-              
+
               <a href="https://github.com/Tremule"><img src="{{ url_for('static', filename = 'github-icon.png') }}" class="github-icon" alt="Check out my github account!"></a>
           </div>
           <div class="col-md-4 text-center person">
               <img src="https://avatars0.githubusercontent.com/u/8755434?v=3&s=460" alt="Charles C. Lee" class="img-thumbnail img-size">
               <h2 class="name">Charles C. Lee</h2>
               <h5 class="location">California, USA</h5>
-              <p class="blurb">I had the pleasure working with both Martin L. and Alan J. in creating this 
-              flask app. This experience proved to be a necessity in my journey towards a career as a developer. Lastly, 
+              <p class="blurb">I had the pleasure working with both Martin L. and Alan J. in creating this
+              flask app. This experience proved to be a necessity in my journey towards a career as a developer. Lastly,
               I want to thank both Martin and Santi for taking time out of their lives in order to teach those willing to learn.</p>
               <a href="https://github.com/ChanChar"><img src="{{ url_for('static', filename = 'github-icon.png') }}" class="github-icon" alt="Check out my github account!"></a>
           </div>
         </div>
         <hr>
-        <h3 class="quote">&ldquo;Men or Gods? Many have asked this question in regards to the site's 
-        creators: Martin, Charlie and Alan. Consensus leans to the latter, 
+        <h3 class="quote">&ldquo;Men or Gods? Many have asked this question in regards to the site's
+        creators: Martin, Charlie and Alan. Consensus leans to the latter,
         but who can say for sure.&rdquo; - Alan J.</h3>
     </div>
 </div>
 {% endblock %}
+
+{% block extra_scripts %}
+<script>
+  $(document).ready(function() {
+    var image_url = "http://res.cloudinary.com/charliecloud/image/upload/v1440735822/SteamScout/devpage.jpg";
+    var img = new Image();
+    img.onload = function(){
+      $('.background').css({'background': 'url(' + image_url + ') gray 50% top', 'background-size' : 'cover'});
+      $('.background').fadeIn("slow");
+    }
+    img.src = image_url;
+  });
+</script>
+{% endblock extra_scripts %}

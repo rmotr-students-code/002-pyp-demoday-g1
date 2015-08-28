@@ -13,47 +13,60 @@
 
   <div class='row text-center'>
     <div class="col-md-6 col-md-offset-3">
-      
+
       <form class="signup-form" action="{{ url_for('signup') }}" method="post">
         {{ form.hidden_tag() }}
         <div class="form-group {% if form.username.errors %} has-error {% endif %}">
             <h4>{{ form.username.label }}</h4>
             {{ form.username(placeholder="Steam Scouter", class="form-control input-lg text-center")}}
-            <!-- moved error into help-block so error messages can be customized with css -->
+
             <p class="help-block">{{ form.username.errors[0] }}</p>
-            
+
           </div>
-          
+
            <div class="form-group {% if form.email.errors %} has-error {% endif %}">
               <h4>{{ form.email.label }}</h4>
-              {{ form.email(placeholder="Example@example.com", class="form-control input-lg text-center") }} 
+              {{ form.email(placeholder="Example@example.com", class="form-control input-lg text-center") }}
               <p class="help-block">{{ form.email.errors[0] }}</p>
-              
+
             </div>
-            
+
           <div class="form-group {% if form.password.errors %} has-error {% endif %}">
             <h4>{{ form.password.label }}</h4>
             {{ form.password(placeholder="Password", class="form-control input-lg text-center") }}
             <p class="help-block">{{ form.password.errors[0] }}</p>
-            
+
           </div>
-          
+
           <div class="form-group {% if form.confirm.errors %} has-error {% endif %}">
             <h4>{{ form.confirm.label }}</h4>
-            <!--Here lies Charlie's pride-->
-            {{ form.confirm(placeholder="Password", class="form-control input-lg text-center") }}
+            {{ form.confirm(placeholder="Password Confirmation", class="form-control input-lg text-center") }}
             <p class="help-block">{{ form.confirm.errors[0] }}</p>
-            
+
           </div>
-          
+
         <!--<div class="input-group input-group-lg">-->
           <button type="submit" class="btn form-control btn-success">Submit</button>
         <!--</div>-->
-      
+
       </form>
-    
+
     </div> <!-- end of col-md-6 col-md-offset-3 -->
   </div> <!-- end of row -->
 </div> <!--end of container -->
 </div>
 {% endblock content %}
+
+{% block extra_scripts %}
+<script>
+  $(document).ready(function() {
+    var image_url = "http://res.cloudinary.com/charliecloud/image/upload/v1440729544/SteamScout/signup.jpg";
+    var image = new Image();
+    image.onload = function(){
+      $('.background').css({'background': 'url(' + image_url + ') gray 50% 25%', 'background-size' : 'cover'});
+      $('.background').fadeIn("slow");
+    }
+    image.src = image_url;
+  });
+</script>
+{% endblock extra_scripts %}

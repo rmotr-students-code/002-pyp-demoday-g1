@@ -36,7 +36,7 @@ class SignUpForm(Form):
                     EqualTo('confirm', message=(u'Passwords must match'))])
 
     confirm = PasswordField(
-        'Please Repeat your Password',
+        'Password Confirmation',
         validators=[Required("Please repeat your password")])
 
 

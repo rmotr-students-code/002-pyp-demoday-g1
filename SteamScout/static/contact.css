@@ -3,13 +3,7 @@
 }
 
 .background {
-    position: relative;
     height: 90vh;
-    background: url('http://www.twinfinite.net/wp-content/uploads/2015/03/sci-fi-mmorpg-mmo-games-eve-online-art.jpg') no-repeat center center; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
 }
 
 .container {
@@ -20,8 +14,8 @@
 .contact-form {
     color: black;
     width: 100%;
-    /*margin-top: 50px;*/
-    background-color: rgba(256, 256, 256, 0.8);
+    margin-top: 5%;
+    background-color: rgba(256, 256, 256, 0.9);
     padding: 10px;
     border-radius: 3px;
 }

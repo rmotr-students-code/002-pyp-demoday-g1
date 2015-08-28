@@ -9,7 +9,7 @@ from flask.ext.mail import Message
 import os
 # Refresh the Games table (1 minute run time)
 def reset_game_db():
-    
+
     game_list = r.get('http://api.steampowered.com/ISteamApps/GetAppList/v0001')
     for game in game_list.json()['applist']['apps']['app']:
         try:
@@ -27,8 +27,7 @@ def reset_db():
     db.drop_all()
     db.create_all()
 
-if __name__ == '__main__':       
+if __name__ == '__main__':
     #helpers.send_game_alert(1)
     reset_db()
     reset_game_db()
-

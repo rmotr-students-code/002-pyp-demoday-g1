@@ -2,17 +2,18 @@
     font-family: 'Play';
 }
 
+.body {
+    margin-bottom: 0;
+}
+
 .navbar-top {
     margin-bottom: 0;
 }
 
 .nav-top {
-    background-color: white; 
+    background-color: white;
 }
 
-.body {
-    margin-bottom: 0;
-}
 
 .navbar-header {
     display: inline-block;
@@ -21,7 +22,7 @@
     height: 45px;
     width: 45px;
     position: relative;
-    top: -12px; 
+    top: -12px;
 }
 
 #nav-title {

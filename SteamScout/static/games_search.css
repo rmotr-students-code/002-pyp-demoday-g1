@@ -20,12 +20,3 @@
     width: 600px;
     margin-left: -300px;
 }
-
-.background {
-    background: url('http://www.hdwallpapers.in/walls/evolve_2015_game-wide.jpg') no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-

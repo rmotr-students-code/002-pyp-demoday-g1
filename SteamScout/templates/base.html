@@ -15,42 +15,42 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base.css') }}">
     <link href='http://fonts.googleapis.com/css?family=Play' rel='stylesheet' type='text/css'>
     {%- endblock styles %}
-    
+
     {% block extra_styles %}
 
     {% endblock extra_styles %}
-    
+
     {%- endblock head %}
   </head>
-  
+
   <body{% block body_attribs %}{% endblock body_attribs %}>
     {% block body -%}
     {% block navbar %}
-    
-    <body class = "body">
+
+    <body class="body">
     <div class="navbar navbar-default nav-top" role="navigation">
       <div class="container-fluid">
-        
+
         <div class="navbar-header">
           <a class="navbar-brand" href="/">
             <img class="logo" src="{{ url_for('static', filename='steamscout.png') }}">
             <p id="nav-title">SteamScout</p>
           </a>
-        </div>        
+        </div>
 
-                  
           <ul class="nav navbar-nav navbar-right">
           {% if current_user.is_authenticated() %}
             <li><a href="/settings">{{ current_user.username }}</a></li>
             <li><a href="/games">Games</a></li>
             <li><a href="/logout">Log out</a></li>
           {% else %}
-            <li><a href="/games">Game Library</a></li>
-            <li><a href="/login">Log In</a></li>
+            <li><a href="/games">Library</a></li>
+            <li><a href="/login">Login</a></li>
           {% endif %}
           </ul>
         </div>
     </div>
+
     <!--Flash-->
     {% with messages = get_flashed_messages(with_categories=True) %}
       {% if messages %}
@@ -81,7 +81,7 @@
     </div>
 
     {%- endblock navbar %}
-    
+
 
 
     {%- endblock body %}
@@ -91,9 +91,11 @@
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   {%- endblock scripts %}
+
   {% block extra_scripts %}
   <!--EXTRA JS HERE-->
   {% endblock extra_scripts %}
+
 {%- endblock html %}
 </html>
 {% endblock doc -%}
